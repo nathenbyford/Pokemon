@@ -22,3 +22,16 @@ ggplot(pokemon, aes(typing, speed)) +
 
 ggplot(pokemon, aes(typing, speed)) +
   geom_violin()
+
+# slpit type into primary and secondary
+
+pokemon_new <- pokemon %>% separate(typing, into = c("primary", "secondary"))
+
+unique(pokemon_new$primary)
+unique(pokemon_new$secondary)
+
+ggplot(pokemon_new, aes(primary, speed)) +
+  geom_boxplot()
+
+ggplot(pokemon_new, aes(primary, weight)) +
+  geom_boxplot()
