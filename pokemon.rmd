@@ -1,13 +1,39 @@
 ---
-title: "Pokemon"
+title: "Pokemon Analysis"
 author: "Connor Bryson, Nathen Byford, Miguel Iglesias"
 date: "10/12/2021"
 output: pdf_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, fig.width = 3, fig.height = 2)
+knitr::opts_chunk$set(echo = TRUE,fig.height = 3)
+library("patchwork")
+library("tidyverse")
+theme_set(
+  theme_bw() +
+    theme(
+      panel.grid.minor.x = element_blank(), 
+      axis.title.y = element_text(angle = 0, vjust = .5)
+    )
+)
 ```
 
+## Introduction
 
 
+
+## Questions and Findings
+
+### Speed
+
+We want to begin with looking into what factors effect the speed of the Pokemon. 
+
+
+### Capture Rate
+
+We also wanted to look into how capture rate is effected by variables such as height, weight, gender, and legendary.
+
+
+### Happiness
+
+Lastly we wanted to see what factors effected the happiness of the Pokemon.
