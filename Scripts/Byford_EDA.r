@@ -1,7 +1,13 @@
 ## Nathen Byford
 ## Pokemon
 
-library(tidyverse); theme_set(theme_bw())
+library("tidyverse")
+theme_set(theme_bw() + 
+            theme(
+              panel.grid.minor.x = element_blank(), 
+              axis.title.y = element_text(angle = 0, vjust = .5)
+            )
+)
 
 pokemon <- read_csv(".\\data\\pokemon.csv")
 
@@ -30,8 +36,20 @@ pokemon_new <- pokemon %>% separate(typing, into = c("primary", "secondary"))
 unique(pokemon_new$primary)
 unique(pokemon_new$secondary)
 
-ggplot(pokemon_new, aes(primary, speed)) +
-  geom_boxplot()
+pokemon_new |> 
+  ggplot(aes(reorder(primary, speed), speed)) +
+  geom_boxplot() +
+  labs(x = "Primary Type", y = "Speed")
 
-ggplot(pokemon_new, aes(primary, weight)) +
-  geom_boxplot()
+pokemon_new |> 
+  ggplot(aes(reorder(primary, speed), speed)) +
+  geom_jitter(width = 0.25) +
+  labs(x = "Primary Type", y = "Speed")
+
+pokemon_new |> 
+  ggplot(aes(reorder(primary, speed), speed)) +
+  geom_bin2d() +
+  scale_fill_viridis_c() +
+  labs(x = "Primary Type", y = "Speed") +
+  theme(panel.grid.major.x = element_blank()) 
+
