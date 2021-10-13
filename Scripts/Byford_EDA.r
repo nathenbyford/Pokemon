@@ -55,3 +55,15 @@ pokemon_new |>
   theme(panel.grid.major.x = element_blank()) 
 
 
+## Looking at Base happyness
+
+  # Potential points of interest; Type, baby_pokemon, 
+
+pokemon_new |> ggplot(aes(primary, base_happiness)) +
+  geom_jitter(alpha = 0.2) 
+
+pokemon_new |> ggplot(aes(primary, base_happiness)) +
+  geom_bin2d()
+
+
+
