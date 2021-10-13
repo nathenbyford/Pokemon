@@ -2,11 +2,12 @@
 ## Pokemon
 
 library("tidyverse")
+
 theme_set(theme_bw() + 
-            theme(
-              panel.grid.minor.x = element_blank(), 
-              axis.title.y = element_text(angle = 0, vjust = .5)
-            )
+  theme(
+    panel.grid.minor.x = element_blank(), 
+    axis.title.y = element_text(angle = 0, vjust = .5)
+  )
 )
 
 pokemon <- read_csv(".\\data\\pokemon.csv")
@@ -52,4 +53,5 @@ pokemon_new |>
   scale_fill_viridis_c() +
   labs(x = "Primary Type", y = "Speed") +
   theme(panel.grid.major.x = element_blank()) 
+
 
