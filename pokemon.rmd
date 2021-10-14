@@ -77,6 +77,7 @@ We also wanted to look into how capture rate is effected by variables such as he
 
 ``` {r}
 
+pokemon <- read_csv(".\\data\\pokemon.csv")
 
 #Tidy the data by separating typing in primary and secondary types
 #Add a column called BMI derived from weight and height
