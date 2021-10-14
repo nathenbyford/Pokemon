@@ -18,7 +18,46 @@ theme_set(
 )
 ```
 
+
+```{r data cleaning, echo=FALSE, warning=FALSE, message=FALSE}
+# read in data.
+pokemon <- read_csv(".\\data\\pokemon.csv")
+
+# make function to factorize happiness
+factorize <- function(x) {
+  factor(case_when(
+            x == (0) ~ "Very unhappy",
+            x == (35) ~ "Moderatly unhappy",
+            x == (50) ~ "Slightly happy",
+            x == (70) ~ "Neutral",
+            x == (90) ~ "Slightly unhappy",
+            x == (100) ~ "Moderatly happy",
+            x == (140) ~ "Very happy"
+            ), 
+         levels = c(
+           "Very unhappy", 
+           "Moderatly unhappy", 
+           "Slightly happy",
+           "Neutral",
+           "Slightly unhappy",
+           "Moderatly happy",
+           "Very happy"
+           ), 
+         ordered = TRUE
+         )
+}
+
+# New pokemon dataset to use, adds BMI and happiness
+pokemon_new <-  pokemon %>%
+  separate(typing, into = c("primary", "secondary")) %>%
+  mutate(BMI = (weight/10)/((height/10)^2)) %>%
+  filter(BMI <= 50000) %>%
+  mutate(happiness = factorize(factor(base_happiness, ordered = TRUE)))
+
+```
+
 ## Introduction
+
 
 
 
