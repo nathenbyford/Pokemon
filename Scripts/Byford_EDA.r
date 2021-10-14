@@ -101,10 +101,16 @@ pokemon_new |> ggplot(aes(shape, base_happiness)) +
   geom_jitter(alpha = .1)
 
 pokemon_new |> ggplot(aes(shape, base_happiness)) +
+  geom_bin2d()
+
+pokemon_new |> ggplot(aes(shape, base_happiness)) +
   geom_boxplot()
 
 pokemon_new |> ggplot(aes(female_rate, base_happiness)) +
   geom_jitter(alpha = .2)
+
+pokemon_new |> ggplot(aes(as.factor(female_rate), base_happiness)) +
+  geom_boxplot()
 
 pokemon_new |> ggplot(aes(as.factor(gen_introduced), base_happiness)) +
   geom_jitter()
