@@ -1,6 +1,7 @@
 ## Nathen Byford
 ## Pokemon
 
+library(patchwork)
 library("tidyverse")
 
 theme_set(theme_bw() + 
@@ -33,14 +34,25 @@ ggplot(pokemon, aes(typing, speed)) +
 # slpit type into primary and secondary
 
 factorize <- function(x) {
-  factor(case_when(x == 0 ~ c("Very unhappy"),
-            x == 35 ~ c("Moderatly unhappy"),
-            x == 50 ~ c("Slightly happy"),
-            x == 70 ~ c("Neutral"),
-            x == 90 ~ c("Slightly unhappy"),
-            x == 100 ~ c("Moderatly happy"),
-            x == 140 ~ c("Very happy")
-            ), ordered = TRUE
+  factor(case_when(
+            x == (0) ~ "Very unhappy",
+            x == (35) ~ "Moderatly unhappy",
+            x == (50) ~ "Slightly happy",
+            x == (70) ~ "Neutral",
+            x == (90) ~ "Slightly unhappy",
+            x == (100) ~ "Moderatly happy",
+            x == (140) ~ "Very happy"
+            ), 
+         levels = c(
+           "Very unhappy", 
+           "Moderatly unhappy", 
+           "Slightly happy",
+           "Neutral",
+           "Slightly unhappy",
+           "Moderatly happy",
+           "Very happy"
+           ), 
+         ordered = TRUE
          )
 }
 
@@ -94,7 +106,7 @@ pokemon_new |> ggplot(aes(baby_pokemon, happiness)) +
 pokemon_new |> ggplot(aes(legendary, happiness)) +
   geom_jitter()
 
-pokemon_new |> ggplot(aes(legendary, happiness)) +
+pokemon_new |> ggplot(aes(legendary, base_happiness)) +
   geom_violin(aes(fill = legendary)) +
   geom_boxplot(width = .03)
 
@@ -107,7 +119,7 @@ pokemon_new |> ggplot(aes(primary_color, happiness)) +
 pokemon_new |> ggplot(aes(mythical, happiness)) +
   geom_jitter()
 
-pokemon_new |> ggplot(aes(mythical, happiness)) +
+pokemon_new |> ggplot(aes(mythical, base_happiness)) +
   geom_boxplot()
 
 pokemon_new |> ggplot(aes(BMI, happiness)) +
@@ -142,23 +154,39 @@ pokemon_new |> ggplot(aes(as.factor(gen_introduced), base_happiness)) +
 pokemon_new |> ggplot(aes(genderless, happiness)) +
   geom_jitter()
 
-pokemon_new |> ggplot(aes(genderless, happiness)) +
+pokemon_new |> ggplot(aes(genderless, base_happiness)) +
   geom_boxplot()
 
+
+# final plots
 
 pokemon_new |> ggplot(aes(as.factor(female_rate), happiness)) +
   geom_bin2d(alpha = .9) +
   scale_fill_viridis_c() +
-  labs(x = "Female Rate", y = "Happiness") +
+  labs(title = "Happiness of Pokemon by Female Rate", x = "Female Rate", y = "Happiness") +
   theme(panel.grid.major.x = element_blank())
 
-pokemon_new |> ggplot(aes(as.factor(female_rate), base_happiness)) +
-  geom_bin2d(alpha = .9) +
-  scale_fill_viridis_c() +
-  labs(x = "Female Rate", y = "Happiness") +
-  theme(panel.grid.major.x = element_blank())
 
 pokemon_new |> ggplot(aes(as.factor(gen_introduced), base_happiness)) +
-  geom_violin(aes(fill = as.factor(gen_introduced))) +
-  scale_fill_viridis_d() +
-  theme(legend.position = "None")
+  geom_boxplot()
+
+
+## Basic boxplots
+
+b1 <- pokemon_new |> ggplot(aes(mythical, base_happiness)) +
+  geom_boxplot() + 
+  labs(title = "Happiness of Mythical Pokemon", x = "Mythical", y = "Happiness")
+
+b2 <- pokemon_new |> ggplot(aes(legendary, base_happiness)) +
+  geom_boxplot() + 
+  labs(title = "Happiness of Legendary Pokemon", x = "Legendary", y = "Happiness")
+
+b3 <- pokemon_new |> ggplot(aes(primary, base_happiness)) +
+  geom_boxplot() + 
+  labs(title = "Happiness of Pokemon my Primary Type", x = "Primary Type", 
+       y = "Happiness")
+
+b4 <- pokemon_new |> ggplot(aes(as.factor(gen_introduced), base_happiness)) +
+  geom_boxplot() 
+
+(b1 + b2) / (b3) / b4
