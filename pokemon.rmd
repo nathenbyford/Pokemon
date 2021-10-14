@@ -21,7 +21,6 @@ theme_set(
 ## Introduction
 
 
-
 ## Questions and Findings
 
 ### Speed
