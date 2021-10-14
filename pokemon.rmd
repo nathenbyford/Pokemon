@@ -36,4 +36,4 @@ We also wanted to look into how capture rate is effected by variables such as he
 
 ### Happiness
 
-Lastly we wanted to see what factors effected the happiness of the Pokemon.
+Lastly we wanted to see what factors effected the happiness of the Pokemon. This variable was just something we thought would be fun to look into. Our main questions were what other variables effect the Pokemon's happiness. We began with looking at if the Pokemon is a legendary and if it's a mythical Pokemon.
