@@ -187,6 +187,8 @@ b3 <- pokemon_new |> ggplot(aes(primary, base_happiness)) +
        y = "Happiness")
 
 b4 <- pokemon_new |> ggplot(aes(as.factor(gen_introduced), base_happiness)) +
-  geom_boxplot() 
+  geom_boxplot() + 
+  labs(title = "Happiness of Pokemon by Generation Introduced", 
+       x = "Generation Introduced", y = "Happiness")
 
 (b1 + b2) / (b3) / b4
