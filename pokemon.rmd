@@ -50,7 +50,8 @@ factorize <- function(x) {
          )
 }
 
-# New pokemon dataset to use, adds BMI and happiness
+# New pokemon dataset to use, adds BMI and happiness. BMI was filtered to 
+#remove one outlier with a BMI of 100000. The next highest BMI was 644.
 pokemon_new <-  pokemon %>%
   separate(typing, into = c("primary", "secondary")) %>%
   mutate(BMI = (weight / 10) / ((height / 10)^2)) %>%
@@ -186,12 +187,14 @@ BMI
 
 ```
 
-As can be seen, size does have an influence on the rate of capture. The taller and heavier Pokémon both have decreased rates of capture. Interestingly enough, however, when the two are put together as with BMI, the relationship goes away. To further understand the complex relationship between size and capture rate, more analysis would be required, however, the preliminary look suggests that size does have some affect on capture rate.
+As can be seen, size does have an influence on the rate of capture. The taller and heavier Pokémon both have decreased rates of capture. Interestingly enough, however, when the two are put together as with BMI, the relationship goes away. To further understand the complex relationship between size and capture rate, more analysis would be required, however, the preliminary look suggests that size does have some effect on capture rate.
+
 #### Other variables of interest
 
-After learning more about the relationship between size and capture rate, I [Miguel] decided to see how other variables may affect the capture rate. The first one I examined was the shape of the Pokémon. Shapes include armor, quadraped, upright and more. 
+After learning more about the relationship between size and capture rate, I decided to see how other variables may affect the capture rate. The first one I examined was the shape of the Pokémon. Shapes include armor, quadraped, upright and more. 
 ```{r}
 
+#Boxplot comparing the capture rate for different Pokémon shapes
 p1 <- ggplot(pokemon_new) +
   geom_boxplot(aes(reorder(shape, capture_rate, FUN = median), capture_rate)) +
   labs(x = "Shape", y = "Capture Rate")
@@ -204,6 +207,8 @@ As seen in the plot above, shape has little influence on capture rate except for
 Next, I looked at four of the boolean variables from the dataset. I wanted to see if how capture rate was influenced by Pokémon being Legendary, Mythical, genderless, and babies. One might expect mythical and legendary Pokémon to be harder to catch, babies easier to catch, and genderless Pokémon to have about equal rates to the gendered ones.
 
 ``` {r}
+
+#Boxplots comparing the capture rate for different boolean variables
 
 p2 <- ggplot(pokemon_new, aes(mythical, capture_rate)) + 
   geom_boxplot() +
@@ -230,6 +235,8 @@ As expected, legendary and mythical Pokémon are more difficult to catch, and ba
 Lastly, I looked at how the percentage that each Pokémon is female influences capture rate. Within the game, Pokémon can be bred to make new Pokémon. Due to the presence of Pokémon breeding, Pokémon gender must also exist and each Pokémon has a set probability of being female when found in the wild. Some Pokémon have a female rate of 12.5%, whereas others are as high as 100%. This does not mean a Pokémon can be 12.5% female and 87.5% male, merely that within the whole population, 12.5% of the Pokémon are female. Genderless Pokémon have a female rate of 0. For more information on the female rate, read: https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_by_gender_ratio.
   
 ``` {r}
+
+#Boxplot to examine difference between capture rate and female rate
  
 p6 <- ggplot(pokemon_new, aes(as.factor(female_rate*100), capture_rate)) +
   geom_boxplot() +
