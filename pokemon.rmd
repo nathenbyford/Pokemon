@@ -346,7 +346,6 @@ The actual show: https://www.netflix.com/watch/81198528?source=35&trackId=254743
 ### Code 
 
 ``` {r,echo = TRUE, eval = FALSE}
-
 # read in data.
 pokemon <- read_csv(".\\data\\pokemon.csv")
 
@@ -383,21 +382,21 @@ pokemon_new <-  pokemon %>%
   mutate(happiness = factorize(factor(base_happiness, ordered = TRUE)))
 
 #Weight vs Speed (organized by Generation)
-spdvswgt <- ggplot(pokemon, aes(x =weight, y =speed, color= gen_introduced)) +
+spdvswgt <- ggplot(pokemon, aes(x =weight/10, y =speed, color= gen_introduced)) +
   geom_point()+
-  labs(title="Weight vs Speed", x= "Weight", y="Speed")+
+  labs(title="Weight vs Speed", x= "Weight (kg)", y="Speed")+
   xlim(c(0, max(pokemon$weight))) + 
   ylim(c(0, max(pokemon$speed)))+
-  viridis::scale_color_viridis()
+  viridis::scale_color_viridis(name = "Generation")
  
 
 #Spvs Height (organized by Generation)
-spdvshgt <- ggplot(pokemon, aes(x =speed, y =height, color= gen_introduced)) +
+spdvshgt <- ggplot(pokemon, aes(x =speed, y =height/10, color= gen_introduced)) +
   geom_point()+
-  labs(title="Speed vs Height", x= "Speed", y="Height")+
+  labs(title="Speed vs Height", x= "Speed", y="Height (m)")+
   xlim(c(0, max(pokemon$speed))) + 
   ylim(c(0, max(pokemon$height)))+
-  viridis::scale_color_viridis()+
+  viridis::scale_color_viridis(name = "Generation")+
   theme(plot.title = element_text(hjust = 0.5))
 
 spdvswgt
@@ -410,9 +409,8 @@ ggplot(pokemon, aes(x =speed, y =capture_rate,  color= gen_introduced)) +
   xlim(c(0, max(pokemon$speed))) + 
   ylim(c(0, max(pokemon$capture_rate)))+
   geom_smooth(se=FALSE)+
-  viridis::scale_color_viridis()+
+  viridis::scale_color_viridis(name = "Generation")+
   theme(plot.title = element_text(hjust = 0.5))
-
 
 #Speed vs Attack 
 spdvsatk <-ggplot(pokemon, aes(x =speed, y =attack,  color= gen_introduced)) +
@@ -420,8 +418,8 @@ spdvsatk <-ggplot(pokemon, aes(x =speed, y =attack,  color= gen_introduced)) +
   labs(title="Speed vs Attack", x= "Speed", y="Attack")+
   xlim(c(0, max(pokemon$speed))) + 
   ylim(c(0, max(pokemon$attack)))+
-  geom_smooth()+
-  viridis::scale_color_viridis()+
+  geom_smooth(se = FALSE)+
+  scale_color_viridis(name = "Generation")+
   theme(plot.title = element_text(hjust = 0.5))
 
 #Speed vs Defense
@@ -430,8 +428,8 @@ spdvsdef <-ggplot(pokemon, aes(x =speed, y =defense,  color= gen_introduced)) +
   labs(title="Speed vs Defense", x= "Speed", y="Defense")+
   xlim(c(0, max(pokemon$speed))) + 
   ylim(c(0, max(pokemon$defense)))+
-  geom_smooth()+
-  viridis::scale_color_viridis()+
+  geom_smooth(se = FALSE)+
+  scale_color_viridis(name = "Generation")+
   theme(plot.title = element_text(hjust = 0.5))
 
 spdvsatk+spdvsdef
@@ -467,11 +465,16 @@ Weight <- ggplot(pokemon_new, aes(weight/10, capture_rate)) +
 (Weight | Height)
 BMI
 
-
 #Boxplot comparing the capture rate for different Pokémon shapes
 p1 <- ggplot(pokemon_new) +
   geom_boxplot(aes(reorder(shape, capture_rate, FUN = median), capture_rate)) +
-  labs(x = "Shape", y = "Capture Rate")
+  labs(x = "Shape", y = "Capture Rate") +
+  theme(
+    panel.grid.major.y = element_blank(),
+    axis.text.y = element_blank(),
+    axis.ticks.y = element_blank(),
+    axis.text.x.bottom = element_text(angle = 60, vjust = 1, hjust = 1)
+  )
 
 p1
 
@@ -519,6 +522,7 @@ v3 <- pokemon_new |> ggplot(aes(baby_pokemon, base_happiness)) +
 
 (v1 + v2 + v3)
 
+
 m1 <- pokemon_new |> ggplot() +
   geom_mosaic(aes(x = product(happiness, primary), fill = happiness)) + 
   labs(title = "Pokémon Happiness by Primary Type", x = "Primary Type", 
@@ -533,10 +537,10 @@ m1 <- pokemon_new |> ggplot() +
 m1
 
 
-pokemon_new |> ggplot(aes(as.factor(female_rate), happiness)) +
+pokemon_new |> ggplot(aes(as.factor(female_rate * 100), happiness)) +
   geom_bin2d(alpha = .9) +
   scale_fill_viridis_c() +
-  labs(title = "Happiness of Pokémon by Female Rate", x = "Female Rate", y = "Happiness") +
+  labs(title = "Happiness of Pokémon by Female Rate", x = "Percent Female (%)", y = "Happiness") +
   theme(panel.grid.major.x = element_blank())
 
 ```
