@@ -100,7 +100,7 @@ pokemon_new |> ggplot(aes(primary, happiness)) +
 pokemon_new |> ggplot(aes(baby_pokemon, happiness)) +
   geom_jitter()
 
-pokemon_new |> ggplot(aes(baby_pokemon, happiness)) +
+pokemon_new |> ggplot(aes(baby_pokemon, base_happiness)) +
   geom_violin()
 
 pokemon_new |> ggplot(aes(legendary, happiness)) +
@@ -173,17 +173,17 @@ pokemon_new |> ggplot(aes(as.factor(gen_introduced), base_happiness)) +
 
 ## Basic boxplots
 
-b1 <- pokemon_new |> ggplot(aes(mythical, base_happiness)) +
-  geom_boxplot() + 
-  labs(title = "Happiness of Mythical Pokemon", x = "Mythical", y = "Happiness")
+v1 <- pokemon_new |> ggplot(aes(mythical, base_happiness)) +
+  geom_violin() +
+  labs(title = "Mythical Pokemon", x = "Mythical", y = "Happiness")
 
-b2 <- pokemon_new |> ggplot(aes(legendary, base_happiness)) +
-  geom_boxplot() + 
-  labs(title = "Happiness of Legendary Pokemon", x = "Legendary", y = "Happiness")
+v2 <- pokemon_new |> ggplot(aes(legendary, base_happiness)) +
+  geom_violin() +
+  labs(title = "Legendary Pokemon", x = "Legendary", y = NULL)
 
-b3 <- pokemon_new |> ggplot(aes(primary, base_happiness)) +
-  geom_boxplot() + 
-  labs(title = "Happiness of Pokemon my Primary Type", x = "Primary Type", 
+v4 <- pokemon_new |> ggplot(aes(primary, base_happiness)) +
+  geom_violin() + 
+  labs(title = "Pokemon my Primary Type", x = "Primary Type", 
        y = "Happiness")
 
 b4 <- pokemon_new |> ggplot(aes(as.factor(gen_introduced), base_happiness)) +
@@ -191,4 +191,32 @@ b4 <- pokemon_new |> ggplot(aes(as.factor(gen_introduced), base_happiness)) +
   labs(title = "Happiness of Pokemon by Generation Introduced", 
        x = "Generation Introduced", y = "Happiness")
 
-(b1 + b2) / (b3) / b4
+v3 <- pokemon_new |> ggplot(aes(baby_pokemon, base_happiness)) +
+  geom_violin() +
+  labs(title = "Baby Pokemon", x = "Baby Pokemon", y = NULL)
+
+(v1 + v2 + v3) / (v4)
+
+
+b1 <- pokemon_new |> ggplot(aes(mythical, base_happiness)) +
+  geom_boxplot() +
+  labs(title = "Mythical Pokemon", x = "Mythical", y = "Happiness")
+
+b2 <- pokemon_new |> ggplot(aes(legendary, base_happiness)) +
+  geom_boxplot() +
+  labs(title = "Legendary Pokemon", x = "Legendary", y = NULL)
+
+b3 <- pokemon_new |> ggplot(aes(baby_pokemon, base_happiness)) +
+  geom_boxplot() +
+  labs(title = "Baby Pokemon", x = "Baby Pokemon", y = NULL)
+
+b4 <- pokemon_new |> ggplot(aes(reorder(primary, base_happiness, mean), base_happiness)) +
+  geom_boxplot() + 
+  labs(title = "Pokemon my Primary Type", x = "Primary Type", 
+       y = "Happiness")
+
+(b1 + b2 + b3) / (b4)
+
+# combination of both
+
+(v1 + v2 + v3) / b4
