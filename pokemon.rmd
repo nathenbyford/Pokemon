@@ -57,7 +57,6 @@ pokemon_new <-  pokemon %>%
   mutate(BMI = (weight / 10) / ((height / 10)^2)) %>%
   filter(BMI <= 50000) %>%
   mutate(happiness = factorize(factor(base_happiness, ordered = TRUE)))
-
 ```
 
 ## Introduction
@@ -85,7 +84,7 @@ spdvswgt <- ggplot(pokemon, aes(x =weight, y =speed, color= gen_introduced)) +
   viridis::scale_color_viridis()
  
 
-#Speed vs Height (organized by Generation)
+#Spvs Height (organized by Generation)
 spdvshgt <- ggplot(pokemon, aes(x =speed, y =height, color= gen_introduced)) +
   geom_point()+
   labs(title="Speed vs Height", x= "Speed", y="Height")+
@@ -333,6 +332,199 @@ The actual show: https://www.netflix.com/watch/81198528?source=35&trackId=254743
 ###Code 
 
 ``` {r, eval = FALSE}
+
+# read in data.
+pokemon <- read_csv(".\\data\\pokemon.csv")
+
+# make function to factorize happiness
+factorize <- function(x) {
+  factor(case_when(
+            x == (0) ~ "Very unhappy",
+            x == (35) ~ "Moderatly unhappy",
+            x == (50) ~ "Slightly happy",
+            x == (70) ~ "Neutral",
+            x == (90) ~ "Slightly unhappy",
+            x == (100) ~ "Moderatly happy",
+            x == (140) ~ "Very happy"
+            ), 
+         levels = c(
+           "Very unhappy", 
+           "Moderatly unhappy", 
+           "Slightly happy",
+           "Neutral",
+           "Slightly unhappy",
+           "Moderatly happy",
+           "Very happy"
+           ), 
+         ordered = TRUE
+         )
+}
+
+# New pokemon dataset to use, adds BMI and happiness. BMI was filtered to 
+#remove one outlier with a BMI of 100000. The next highest BMI was 644.
+pokemon_new <-  pokemon %>%
+  separate(typing, into = c("primary", "secondary")) %>%
+  mutate(BMI = (weight / 10) / ((height / 10)^2)) %>%
+  filter(BMI <= 50000) %>%
+  mutate(happiness = factorize(factor(base_happiness, ordered = TRUE)))
+
+#Weight vs Speed (organized by Generation)
+spdvswgt <- ggplot(pokemon, aes(x =weight, y =speed, color= gen_introduced)) +
+  geom_point()+
+  labs(title="Weight vs Speed", x= "Weight", y="Speed")+
+  xlim(c(0, max(pokemon$weight))) + 
+  ylim(c(0, max(pokemon$speed)))+
+  viridis::scale_color_viridis()
+ 
+
+#Spvs Height (organized by Generation)
+spdvshgt <- ggplot(pokemon, aes(x =speed, y =height, color= gen_introduced)) +
+  geom_point()+
+  labs(title="Speed vs Height", x= "Speed", y="Height")+
+  xlim(c(0, max(pokemon$speed))) + 
+  ylim(c(0, max(pokemon$height)))+
+  viridis::scale_color_viridis()+
+  theme(plot.title = element_text(hjust = 0.5))
+
+spdvswgt
+spdvshgt
+
+#Speed vs Capture Rate
+ggplot(pokemon, aes(x =speed, y =capture_rate,  color= gen_introduced)) +
+  geom_point()+
+  labs(title="Speed vs Capture Rate", x= "Speed", y="Capture Rate")+
+  xlim(c(0, max(pokemon$speed))) + 
+  ylim(c(0, max(pokemon$capture_rate)))+
+  geom_smooth(se=FALSE)+
+  viridis::scale_color_viridis()+
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+#Speed vs Attack 
+spdvsatk <-ggplot(pokemon, aes(x =speed, y =attack,  color= gen_introduced)) +
+  geom_point()+
+  labs(title="Speed vs Attack", x= "Speed", y="Attack")+
+  xlim(c(0, max(pokemon$speed))) + 
+  ylim(c(0, max(pokemon$attack)))+
+  geom_smooth()+
+  viridis::scale_color_viridis()+
+  theme(plot.title = element_text(hjust = 0.5))
+
+#Speed vs Defense
+spdvsdef <-ggplot(pokemon, aes(x =speed, y =defense,  color= gen_introduced)) +
+  geom_point()+
+  labs(title="Speed vs Defense", x= "Speed", y="Defense")+
+  xlim(c(0, max(pokemon$speed))) + 
+  ylim(c(0, max(pokemon$defense)))+
+  geom_smooth()+
+  viridis::scale_color_viridis()+
+  theme(plot.title = element_text(hjust = 0.5))
+
+spdvsatk+spdvsdef
+
+
+#Create a plot that shows the relationship between capture_rate and BMI
+#Limit to not include a lot of empty space
+BMI <- ggplot(pokemon_new, aes(BMI, capture_rate)) +
+  geom_jitter(alpha = 0.2, size = .5) +
+  geom_smooth(se = FALSE) +
+  coord_cartesian(ylim = c(0,275)) +
+  labs(x = "Body Mass Index", y = "Capture Rate")
+
+
+#Create a plot that shows the relationship between capture_rate and Height
+#Limit included to allow for best view of relationship
+Height <- ggplot(pokemon_new, aes(height/10, capture_rate)) +
+  geom_jitter(alpha = 0.2, size = .5) +
+  geom_smooth(se = FALSE) +
+  coord_cartesian(xlim = c(0,5), ylim = c(0,275)) +
+  labs(x = "Height (m)", y = NULL)
+  
+#Create a plot that shows the relationship between capture_rate and weight
+#Limit included to allow for best view of relationship
+
+Weight <- ggplot(pokemon_new, aes(weight/10, capture_rate)) + 
+  geom_jitter(alpha = 0.2, size = .5) +
+  geom_smooth(alpha = 0.5, se = FALSE) +
+  coord_cartesian(ylim = c(0,275)) +
+  labs(x = "Weight (kg)", y = "Capture Rate")
+
+
+(Weight | Height)
+BMI
+
+
+#Boxplot comparing the capture rate for different Pokémon shapes
+p1 <- ggplot(pokemon_new) +
+  geom_boxplot(aes(reorder(shape, capture_rate, FUN = median), capture_rate)) +
+  labs(x = "Shape", y = "Capture Rate")
+
+p1
+
+
+#Boxplots comparing the capture rate for different boolean variables
+
+p2 <- ggplot(pokemon_new, aes(mythical, capture_rate)) + 
+  geom_boxplot() +
+  labs(x = "Mythical", y = "Capture Rate")
+
+p3 <- ggplot(pokemon_new, aes(legendary, capture_rate)) + 
+  geom_boxplot() +
+  labs(x = "Legendary", y = NULL)
+
+p4 <- ggplot(pokemon_new, aes(genderless, capture_rate)) + 
+  geom_boxplot() +
+  labs(x = "Genderless", y = NULL)
+
+p5 <- ggplot(pokemon_new, aes(baby_pokemon, capture_rate)) + 
+  geom_boxplot() +
+  labs(x = "Baby Pokémon", y = NULL)
+
+p2 | p3 | p4 |p5
+
+
+#Boxplot to examine difference between capture rate and female rate
+ 
+p6 <- ggplot(pokemon_new, aes(as.factor(female_rate*100), capture_rate)) +
+  geom_boxplot() +
+  labs(x = "Percent Female", y = "Capture Rate")
+
+p6
+
+v1 <- pokemon_new |> ggplot(aes(mythical, base_happiness)) +
+  geom_violin() +
+  labs(title = "Mythical Pokémon", x = "Mythical", y = "Happiness")
+
+v2 <- pokemon_new |> ggplot(aes(legendary, base_happiness)) +
+  geom_violin() +
+  labs(title = "Legendary", x = "Legendary", y = NULL)
+
+v3 <- pokemon_new |> ggplot(aes(baby_pokemon, base_happiness)) +
+  geom_violin() +
+  labs(title = "Baby Pokémon", x = "Baby Pokémon", y = NULL)
+
+(v1 + v2 + v3)
+
+m1 <- pokemon_new |> ggplot() +
+  geom_mosaic(aes(x = product(happiness, primary), fill = happiness)) + 
+  labs(title = "Pokémon Happiness by Primary Type", x = "Primary Type", 
+       y = "Happiness") +
+  theme(
+    panel.grid.major.y = element_blank(),
+    axis.text.y = element_blank(),
+    axis.ticks.y = element_blank(),
+    axis.text.x.bottom = element_text(angle = 60, vjust = 1, hjust = 1)
+  )
+
+m1
+
+
+pokemon_new |> ggplot(aes(as.factor(female_rate), happiness)) +
+  geom_bin2d(alpha = .9) +
+  scale_fill_viridis_c() +
+  labs(title = "Happiness of Pokémon by Female Rate", x = "Female Rate", y = "Happiness") +
+  theme(panel.grid.major.x = element_blank())
+
 ```
 
 
