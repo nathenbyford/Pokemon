@@ -70,7 +70,8 @@ We want to begin with looking into what factors effect the speed of the Pokemon.
 
 ### Capture Rate
 
-We also wanted to look into how capture rate is effected by variables such as height, weight, gender, and legendary.
+We also wanted to look into how capture rate is effected by variables such as height, weight, gender, and legendary. Capture rate describes how easy it is to capture a Pokémon found in the wild. The lower
+the capture rate, the harder the Pokémon is to capture. Initially our belief was that the larger the Pokémon, the harder it would be to capture so we decided to compare capture rate to BMI, Height and Weight. We then wanted to see how certain categorical variables affected capture rate in the hopes of finding a pattern in how the game developers determined capture rate.
 
 ``` {r}
 
