@@ -297,8 +297,9 @@ pokemon_new |> ggplot(aes(as.factor(female_rate), happiness)) +
 
 ##Conclusion
 
-For a game as complex as Pokémon, 
+For a game as popular as Pokémon, one might expect that careful planning has dictated every decision; every statistic for every Pokémon being thoughtfully decided with careful analysis. After all, if a game makes no sense, it would be unplayable. Given the size of the Nintendo company, there should be no excuse behind what our group has discovered; that whoever designs each Pokémon has no idea what they are doing. This is especially true today, as shown by the plot comparing speed and weight by each generation. Now, it is true that some variables have intuitive correlations, such as height and capture rate. But what is truly baffling is that there seems to be no pattern behind which relationships make sense and which ones do not. Why is speed correlated to attack values, but not defense? Why does shape have little influence on capture rate, except in the cases of leg and armor? {{{Insert talk about Happiness}}}
 
+In a dataset rife with unexplainible associations, our group did find one variable that influences numerous other variables. That variable is the female rate. Female rate influenced both the capture rate, and the happiness. Though not included in this analysis, during our exploratory portion of our analysis, we found other variables that were influenced by female rate, especially the primary color. 
 
 
 
