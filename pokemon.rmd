@@ -297,7 +297,7 @@ pokemon_new |> ggplot(aes(as.factor(female_rate), happiness)) +
 
 ##Conclusion
 
-
+For a game as complex as Pokémon, 
 
 
 
