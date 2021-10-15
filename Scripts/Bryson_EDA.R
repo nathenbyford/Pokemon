@@ -11,7 +11,8 @@ pokemon <- read.csv(".\\data\\pokemon.csv")
 theme_set(theme_bw() + 
             theme(
               panel.grid.minor.x = element_blank(), 
-              axis.title.y = element_text(angle = 0, vjust = .5)
+              axis.title.y = element_text(angle = 0, vjust = .5),
+              plot.title = element_text(hjust = 0.5)
             )
 )
 
@@ -21,8 +22,7 @@ ggplot(pokemon, aes(x =weight, y =speed, color= gen_introduced)) +
   labs(title="Weight vs Speed", x= "Weight", y="Speed")+
   xlim(c(0, max(pokemon$weight))) + 
   ylim(c(0, max(pokemon$speed)))+
-  viridis::scale_color_viridis()+
-  theme(plot.title = element_text(hjust = 0.5))
+  viridis::scale_color_viridis()
  
 
 #Speed vs Height
