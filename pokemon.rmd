@@ -83,7 +83,7 @@ spdvswgt <- ggplot(pokemon, aes(x =weight, y =speed, color= gen_introduced)) +
   labs(title="Weight vs Speed", x= "Weight", y="Speed")+
   xlim(c(0, max(pokemon$weight))) + 
   ylim(c(0, max(pokemon$speed)))+
-  viridis::scale_color_viridis()
+  scale_color_viridis()
  
 
 #Speed vs Height (organized by Generation)
