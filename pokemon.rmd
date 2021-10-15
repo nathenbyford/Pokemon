@@ -139,6 +139,40 @@ p6 <- ggplot(pokemon_new, aes(as.factor(female_rate*100), capture_rate)) +
 
 Lastly we wanted to see what factors effected the happiness of the Pokemon. This variable was just something we thought would be fun to look into. Our main questions were what other variables effect the Pokemon's happiness. We began with looking at if the Pokemon is a legendary and if it's a mythical Pokemon.
 
+To get a grasp of what effects different variables had on the happiness of the Pokemon we took a look at how different characteristics of the Pokemon had an effect. Bellow are three violin plots looking at mythical, legendary, and baby Pokemon and comparing them to Pokemon without that attribute. 
+
+```{r, fig.height=2}
+v1 <- pokemon_new |> ggplot(aes(mythical, base_happiness)) +
+  geom_violin() +
+  labs(title = "Mythical Pokemon", x = "Mythical", y = "Happiness")
+
+v2 <- pokemon_new |> ggplot(aes(legendary, base_happiness)) +
+  geom_violin() +
+  labs(title = "Legendary", x = "Legendary", y = NULL)
+
+v3 <- pokemon_new |> ggplot(aes(baby_pokemon, base_happiness)) +
+  geom_violin() +
+  labs(title = "Baby Pokemon", x = "Baby Pokemon", y = NULL)
+
+(v1 + v2 + v3)
+```
+
+We also looked at how the Pokemon primary type effects it's happiness. Looking at the box plot below we can see that there are diferent distributions of happiness bases upon primary type. Notable the only type with all possible values for happiness is Normal type, and the type with the least variability in all data points is flying type, but they still aren't very happy.
+
+```{r}
+b4 <- pokemon_new |> ggplot(aes(reorder(primary, base_happiness, mean), base_happiness)) +
+  geom_boxplot() + 
+  labs(title = "Pokemon by Primary Type", x = "Primary Type", 
+       y = "Happiness") +
+  theme(
+    axis.text.x.bottom = element_text(angle = 60, vjust = .5, hjust = 0.5),
+    panel.grid.major.x = element_blank()    
+    )
+
+b4
+```
+
+
 We were also curious if the female rate effected happiness of the Pokemon. Converting the happiness variable to a likert scale we can easily see the amount of data points in each bin of female rate in the following plot. As seen in the plots before there is a smaller amount of Pokemon with a high female rate. Notice how it appears that depending of the female rate there are different levels of happiness that are observed. What stood out to us what that Pokemon with a female rate of 0.25 or 0.875 are only observed with neutral happiness and there are no very unhappy Pokemon with a rate of 1. There is no apparent correlation between happiness and female rate.
 
 ```{r}
