@@ -35,3 +35,7 @@ ggplot(pokemon_new, aes(primary, speed)) +
 
 ggplot(pokemon_new, aes(primary, weight)) +
   geom_boxplot()
+
+pokemon_new |> 
+  ggplot(aes(primary, weight)) +
+    geom_boxplot() 
