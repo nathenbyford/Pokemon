@@ -1,6 +1,10 @@
 library("tidyverse")
 library("patchwork")
 
+install.packages("ggmosaic")
+
+library("ggmosaic")
+
 data = read_csv(".\\data\\pokemon.csv")
 
 theme_set(theme_bw() + 
@@ -27,10 +31,11 @@ tb <- data %>%
 #Limit to not include a lot of empty space
 BMI <- ggplot(tb, aes(BMI, capture_rate)) +
   geom_jitter(alpha = 0.33, color = "Steel Blue") +
-  geom_smooth() +
+  geom_smooth(color = "Steel blue") +
   coord_cartesian(ylim = c(0,275)) +
   labs(x = "Body Mass Index", y = "Capture Rate")
 
+BMI
 
 #Create a plot that shows the relationship between capture_rate and Height
 #Limit included to allow for best view of relationship
@@ -78,4 +83,6 @@ p6 <- ggplot(tb, aes(as.factor(female_rate*100), capture_rate)) +
   labs(x = "Percent Female", y = "Capture Rate")
              
 (p2 | p3 | p4| p5) / p6
+
+p1
  

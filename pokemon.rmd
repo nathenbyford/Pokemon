@@ -10,6 +10,7 @@ knitr::opts_chunk$set(echo = TRUE,fig.height = 2.5)
 library("patchwork")
 library("ggmosaic")
 library("tidyverse")
+library("viridis")
 theme_set(
   theme_bw() +
     theme(
@@ -83,7 +84,7 @@ spdvswgt <- ggplot(pokemon, aes(x =weight, y =speed, color= gen_introduced)) +
   labs(title="Weight vs Speed", x= "Weight", y="Speed")+
   xlim(c(0, max(pokemon$weight))) + 
   ylim(c(0, max(pokemon$speed)))+
-  scale_color_viridis()
+  viridis::scale_color_viridis()
  
 
 #Speed vs Height (organized by Generation)
@@ -292,4 +293,13 @@ pokemon_new |> ggplot(aes(as.factor(female_rate), happiness)) +
   labs(title = "Happiness of Pokemon by Female Rate", x = "Female Rate", y = "Happiness") +
   theme(panel.grid.major.x = element_blank())
 ```
+
+
+##Conclusion
+
+
+
+
+
+
 
