@@ -74,9 +74,10 @@ We want to begin with looking into what factors effect the speed of the Pokemon.
 
 ### Capture Rate
 
+#### Size versus Capture Rate
+
 As mentioned earlier, I [Miguel] wanted to test the game developers and see if anything predicted capture rate. Capture rate describes how easy it is to capture a Pokémon found in the wild. The lower
-the capture rate, the harder the Pokémon is to capture. For more information on capture rate, a detailed description can be found at: https://bulbapedia.bulbagarden.net/wiki/Catch_rate. Of the variables 
-Initially our belief was that the larger the Pokémon, the harder it would be to capture so we decided to compare capture rate to BMI, Height and Weight. We then wanted to see how certain categorical variables affected capture rate in the hopes of finding a pattern in how the game developers determined capture rate.
+the capture rate, the harder the Pokémon is to capture. For more information on capture rate, a detailed description can be found at: https://bulbapedia.bulbagarden.net/wiki/Catch_rate. Of the variables in the dataset I first decided to look at the influence of height, weight, and then BMI. It made intuitive sense to me that bigger Pokémon would be harder to capture so I decided to test it out.
 
 ``` {r}
 
@@ -108,12 +109,29 @@ Weight <- ggplot(pokemon_new, aes(weight/10, capture_rate)) +
   labs(x = "Weight (kg)", y = "Capture Rate")
 
 
-(Weight | Height) / BMI
+(Weight | Height)
+BMI
 
+```
+
+As can be seen, size does have an influence on the rate of capture. The taller and heavier Pokémon both have decreased rates of capture. Interestingly enough, however, when the two are put together as with BMI, the relationship goes away. To further understand the complex relationship between size and capture rate, more analysis would be required, however, the preliminary look suggests that size does have some affect on capture rate.
+#### Other variables of interest
+
+After learning more about the relationship between size and capture rate, I [Miguel] decided to see how other variables may affect the capture rate. The first one I examined was the shape of the Pokémon. Shapes include armor, quadraped, upright and more. 
+```{r}
 
 p1 <- ggplot(pokemon_new) +
   geom_boxplot(aes(reorder(shape, capture_rate, FUN = median), capture_rate)) +
   labs(x = "Shape", y = "Capture Rate")
+
+p1
+```
+
+As seen in the plot above, shape has little influence on capture rate except for in the cases of Legs and Armor. What may be surprising, however, is that armored Pokémon are easier to capture than non-armored Pokémon.
+
+Next, I looked at four of the boolean variables from the dataset. I wanted to see if how capture rate was influenced by Pokémon being Legendary, Mythical, genderless, and babies. One might expect mythical and legendary Pokémon to be harder to catch, babies easier to catch, and genderless Pokémon to have about equal rates to the gendered ones.
+
+```
 
 p2 <- ggplot(pokemon_new, aes(mythical, capture_rate)) + 
   geom_boxplot() +
@@ -130,14 +148,19 @@ p4 <- ggplot(pokemon_new, aes(genderless, capture_rate)) +
 p5 <- ggplot(pokemon_new, aes(baby_pokemon, capture_rate)) + 
   geom_boxplot() +
   labs(x = "Baby Pokemon", y = NULL)
+
+p2 | p3 | p4 |p5
+  
+```
+
+As expected, legendary and mythical Pokémon are more difficult to catch, and babies are easier to catch. What is surprsing, however, is that genderless Pokémon are also harder to catch. This most likely indicates that there is a confounding variable associated with gender. To determine this, I looked at whether genderless Pokémon were more often legendary.
+  
+``` {r}
  
 p6 <- ggplot(pokemon_new, aes(as.factor(female_rate*100), capture_rate)) +
   geom_boxplot() +
   labs(x = "Percent Female", y = "Capture Rate")
-             
-(p2 | p3 | p4| p5) / p6
  
-
 ```
 
 ### Happiness
