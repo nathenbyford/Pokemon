@@ -6,7 +6,7 @@ output: pdf_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE,fig.height = 3)
+knitr::opts_chunk$set(echo = TRUE,fig.height = 2.5)
 library("patchwork")
 library("tidyverse")
 theme_set(
@@ -18,10 +18,52 @@ theme_set(
 )
 ```
 
+
+```{r data cleaning, echo=FALSE, warning=FALSE, message=FALSE}
+# read in data.
+pokemon <- read_csv(".\\data\\pokemon.csv")
+
+# make function to factorize happiness
+factorize <- function(x) {
+  factor(case_when(
+            x == (0) ~ "Very unhappy",
+            x == (35) ~ "Moderatly unhappy",
+            x == (50) ~ "Slightly happy",
+            x == (70) ~ "Neutral",
+            x == (90) ~ "Slightly unhappy",
+            x == (100) ~ "Moderatly happy",
+            x == (140) ~ "Very happy"
+            ), 
+         levels = c(
+           "Very unhappy", 
+           "Moderatly unhappy", 
+           "Slightly happy",
+           "Neutral",
+           "Slightly unhappy",
+           "Moderatly happy",
+           "Very happy"
+           ), 
+         ordered = TRUE
+         )
+}
+
+# New pokemon dataset to use, adds BMI and happiness
+pokemon_new <-  pokemon %>%
+  separate(typing, into = c("primary", "secondary")) %>%
+  mutate(BMI = (weight/10)/((height/10)^2)) %>%
+  filter(BMI <= 50000) %>%
+  mutate(happiness = factorize(factor(base_happiness, ordered = TRUE)))
+
+```
+
 ## Introduction
 
 
+<<<<<<< HEAD
+=======
 
+
+>>>>>>> a0d9fa52d203765799775d3b3883cd73722afec4
 ## Questions and Findings
 
 ### Speed
@@ -33,7 +75,92 @@ We want to begin with looking into what factors effect the speed of the Pokemon.
 
 We also wanted to look into how capture rate is effected by variables such as height, weight, gender, and legendary.
 
+``` {r}
+
+pokemon <- read_csv(".\\data\\pokemon.csv")
+
+#Tidy the data by separating typing in primary and secondary types
+#Add a column called BMI derived from weight and height
+#Take variable of interest
+#Remove the one BMI anomaly that ruins the BMI graph
+tb <- pokemon %>%
+  separate(typing, into = c("primary", "secondary")) %>%
+  mutate(BMI = (weight/10)/((height/10)^2)) %>%
+  select(name, primary, hp:defense, speed:weight, female_rate:capture_rate,
+         shape, BMI, base_happiness, gen_introduced, can_evolve) %>%
+  filter(BMI <= 50000)
+
+
+#Create a plot that shows the relationship between capture_rate and BMI
+#Limit to not include a lot of empty space
+BMI <- ggplot(tb, aes(BMI, capture_rate)) +
+  geom_jitter(alpha = 0.33, color = "Steel Blue") +
+  geom_smooth() +
+  coord_cartesian(ylim = c(0,275)) +
+  labs(x = "Body Mass Index", y = "Capture Rate")
+
+
+#Create a plot that shows the relationship between capture_rate and Height
+#Limit included to allow for best view of relationship
+Height <- ggplot(tb, aes(height/10, capture_rate)) +
+  geom_jitter(alpha = 0.33, color = "Steel Blue") +
+  geom_smooth() +
+  coord_cartesian(xlim = c(0,5), ylim = c(0,275)) +
+  labs(x = "Height (m)", y = "Capture Rate")
+  
+#Create a plot that shows the relationship between capture_rate and weight
+#Limit included to allow for best view of relationship
+
+Weight <- ggplot(tb, aes(weight/10, capture_rate)) + 
+  geom_jitter(alpha = 0.33, color = "Steel blue") +
+  geom_smooth(alpha = 0.5) +
+  coord_cartesian(ylim = c(0,275)) +
+  labs(x = "Weight (kg)", y = NULL)
+
+
+BMI / (Weight | Height)
+
+
+p1 <- ggplot(tb) +
+  geom_boxplot(aes(reorder(shape, capture_rate, FUN = median), capture_rate)) +
+  labs(x = "Shape", y = "Capture Rate")
+
+p2 <- ggplot(tb, aes(mythical, capture_rate)) + 
+  geom_boxplot() +
+  labs(x = "Mythical")
+
+p3 <- ggplot(tb, aes(legendary, capture_rate)) + 
+  geom_boxplot() +
+  labs(x = "Legendary", y = NULL)
+
+p4 <- ggplot(tb, aes(genderless, capture_rate)) + 
+  geom_boxplot() +
+  labs(x = "Genderless", y = NULL)
+
+p5 <- ggplot(tb, aes(baby_pokemon, capture_rate)) + 
+  geom_boxplot() +
+  labs(x = "Baby Pokemon", y = NULL)
+ 
+p6 <- ggplot(tb, aes(as.factor(female_rate*100), capture_rate)) +
+  geom_boxplot() +
+  labs(x = "Percent Female", y = "Capture Rate")
+             
+(p2 | p3 | p4| p5) / p6
+ 
+
+```
 
 ### Happiness
 
-Lastly we wanted to see what factors effected the happiness of the Pokemon.
+Lastly we wanted to see what factors effected the happiness of the Pokemon. This variable was just something we thought would be fun to look into. Our main questions were what other variables effect the Pokemon's happiness. We began with looking at if the Pokemon is a legendary and if it's a mythical Pokemon.
+
+We were also curious if the female rate effected happiness of the Pokemon. Converting the happiness variable to a likert scale we can easily see the amount of data points in each bin of female rate in the following plot. As seen in the plots before there is a smaller amount of Pokemon with a high female rate. Notice how it appears that depending of the female rate there aredifferent levels of happiness that are observed. What stood out to us what that Pokemon with a female rate of 0.25 or 0.875 are only observed with neutral happiness and there are no very unhappy Pokemon with a rate of 1. There is no apparent correlation between happiness and female rate.
+
+```{r}
+pokemon_new |> ggplot(aes(as.factor(female_rate), happiness)) +
+  geom_bin2d(alpha = .9) +
+  scale_fill_viridis_c() +
+  labs(title = "Happiness of Pokemon by Female Rate", x = "Female Rate", y = "Happiness") +
+  theme(panel.grid.major.x = element_blank())
+```
+
