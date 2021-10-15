@@ -153,16 +153,22 @@ p2 | p3 | p4 |p5
   
 ```
 
-As expected, legendary and mythical Pokémon are more difficult to catch, and babies are easier to catch. What is surprsing, however, is that genderless Pokémon are also harder to catch. This most likely indicates that there is a confounding variable associated with gender. To determine this, I looked at whether genderless Pokémon were more often legendary.
+As expected, legendary and mythical Pokémon are more difficult to catch, and babies are easier to catch. What is surprsing, however, is that genderless Pokémon are also harder to catch. This could be due to a confounding variable, however, it is more likely that the game developers did not put that much thought into this. In fact, a preliminary look for confounding variables suggested that the genderless variable is not confounded by the legendary or mythical variable, both of which might have explained the increased difficulty of capture for genderless Pokémon.
+
+Lastly, I looked at how the percentage that each Pokémon is female influences capture rate. Within the game, Pokémon can be bred to make new Pokémon. Due to the presence of Pokémon breeding, Pokémon gender must also exist and each Pokémon has a set probability of being female when found in the wild. Some Pokémon have a female rate of 12.5%, whereas others are as high as 100%. This does not mean a Pokémon can be 12.5% female and 87.5% male, merely that within the whole population 12.5% of the Pokémon are female. Genderless Pokémon have a female rate of 0.
   
 ``` {r}
  
 p6 <- ggplot(pokemon_new, aes(as.factor(female_rate*100), capture_rate)) +
   geom_boxplot() +
   labs(x = "Percent Female", y = "Capture Rate")
+
+p6
  
 ```
 
+To avoid any confusion, it must be understood that within each Pokémon, the males and females have each capture rate. Though, as it turns out, the female rate does influence the capture rate. Generally speaking, the Pokémon with high female rates are easier to capture. Though the 0% female category may be lower due to the addition of the genderless Pokémon, the 12.5% and 25% catergories are also low, especially compared to the 87.5% category. Why male-dominant Pokémon are harder to capture than female-dominant Pokémon is a question for another day.
+ 
 ### Happiness
 
 Lastly we wanted to see what factors effected the happiness of the Pokemon. This variable was just something we thought would be fun to look into. Our main questions were what other variables effect the Pokemon's happiness. We began with looking at if the Pokemon is a legendary and if it's a mythical Pokemon.
