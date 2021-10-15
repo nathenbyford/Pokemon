@@ -58,7 +58,7 @@ pokemon_new <-  pokemon %>%
 
 ## Introduction
 
-
+Pokémon, a Japanese card and video game, revolves around a fantasy world where people fight each other with creatures they find and domesticate. Each creature, or Pokémon, can be characterized by certain attributes from health points (hp), to their typing which includes fire-Pokémon, water-Pokémon, and grass-Pokémon among others. Our dataset is a CSV that takes all the defined characteristics of the Pokémon and collects into one useable file. Though the dataset includes 49 variables, the ones we are using include: ___________. One variable of interest, speed, is noteworthy because during the exploratory period of this project, we found that there was no relationship between speed and weight. This does not make intuitive sense, so we sought to identify if any other variable could correlate with speed.
 
 ## Questions and Findings
 
