@@ -301,7 +301,7 @@ For a game as popular as Pokémon, one might expect that careful planning has di
 
 In a dataset rife with unexplainable associations, our group did find one variable that influences numerous other variables. That variable is the female rate. Female rate influenced both the capture rate, and the happiness. Though not included in this analysis, during our exploratory portion of our analysis, we found other variables that were influenced by female rate, especially the primary color. The reason that female rate is such a strong predictor may make sense from a sociological real-world perspective, however, the reasoning behind our findings within the Pokémon world remains a mystery.
 
-Overall, our analysis unearthed more questions than answers, and much more about the world of Pokémon needs to be investigated. Should we ever meet some of the people responsible for designing the game, we would have numerous questions to ask, but in the meantime, we hope that the logic, or lack thereof, behind Pokémon creation can be better understood by our work.
+Overall, our analysis unearthed more questions than answers, and much more about the world of Pokémon needs to be investigated. More analysis into possible confounding variables may help explain some of our findings such as the lower capture rate for genderless Pokémon. Future research topics could also include searching for actual interviews or statements by the developers regarding the decision making process when creating new Pokémon. Should we ever meet some of the people responsible for designing the game, we would have numerous questions to ask but, in the meantime, we hope that the logic, or lack thereof, behind Pokémon creation can be better understood by our work.
 
 
 
