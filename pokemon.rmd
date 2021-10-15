@@ -304,7 +304,24 @@ Overall, our analysis unearthed more questions than answers, and much more about
 
 ###Data Source
 
+https://www.kaggle.com/kylekohnen/complete-pokemon-data-set
+
 ###Background Information Sources
+
+Catch Rate Info: https://bulbapedia.bulbagarden.net/wiki/Catch_rate
+
+Female Rate Info: https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_by_gender_ratio
+
+Pokedex Picture: https://bulbapedia.bulbagarden.net/wiki/Pok%C3%A9dex
+
+
+For more information on Pokémon in general, good resources include:
+
+The fan-run wiki: https://bulbapedia.bulbagarden.net/wiki/Main_Page
+The official website: https://www.pokemon.com/us/
+The actual show: https://www.netflix.com/watch/81198528?source=35&trackId=254743534
+
+
 
 ###Code 
 
