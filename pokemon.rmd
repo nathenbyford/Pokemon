@@ -6,7 +6,7 @@ output: pdf_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE,fig.height = 2.5)
+knitr::opts_chunk$set(echo = FALSE, fig.height = 2.5, message = FALSE)
 library("patchwork")
 library("ggmosaic")
 library("tidyverse")
@@ -94,12 +94,14 @@ spdvshgt <- ggplot(pokemon, aes(x =speed, y =height, color= gen_introduced)) +
   theme(plot.title = element_text(hjust = 0.5))
 
 spdvswgt
-
+spdvshgt
 ```
+
 Looking at the graph for weight and speed, we noticed that there are outliers (on the right side of the graph) that do not make sense for speed. To see whether this was a mistake or not, we looked at the generation of each Pokémon  and found that the majority of the outliers came from the most recent generation rather than the earlier generations when Pokémon's system of attributes were still in the works. In addition to weight, height did not have an affect on the speed of a Pokémon, thus defying all of our expectations of this data set.
 
 
 Afterwards, we wanted to see if the speed of a Pokémon affected its overall capture rate and whether it is harder to catch a Pokémon if it has a higher speed or not. 
+
 ```{r}
 #Speed vs Capture Rate
 ggplot(pokemon, aes(x =speed, y =capture_rate,  color= gen_introduced)) +
@@ -112,6 +114,7 @@ ggplot(pokemon, aes(x =speed, y =capture_rate,  color= gen_introduced)) +
   theme(plot.title = element_text(hjust = 0.5))
 
 ```
+
 The plot shows a general negative trend as the speed increases, the capture rate decreases.
 
 
@@ -298,7 +301,7 @@ pokemon_new |> ggplot(aes(as.factor(female_rate), happiness)) +
 ```
 
 
-##Conclusion
+## Conclusion
 
 For a game as popular as Pokémon, one might expect that careful planning has dictated every decision; every statistic for every Pokémon being thoughtfully decided with careful analysis. After all, if a game makes no sense, it would be unplayable. Given the size of the Nintendo company, there should be no excuse behind what our group has discovered; that whoever designs each Pokémon has no idea what they are doing. This is especially true today, as shown by the plot comparing speed and weight by each generation. Now, it is true that some variables have intuitive correlations, such as height and capture rate. But what is truly baffling is that there seems to be no pattern behind which relationships make sense and which ones do not. Why is speed correlated to attack values, but not defense? Why does shape have little influence on capture rate, except in the cases of leg and armor? {{{Insert talk about Happiness}}}
 
@@ -306,13 +309,13 @@ In a dataset rife with unexplainable associations, our group did find one variab
 
 Overall, our analysis unearthed more questions than answers, and much more about the world of Pokémon needs to be investigated. More analysis into possible confounding variables may help explain some of our findings such as the lower capture rate for genderless Pokémon. Future research topics could also include searching for actual interviews or statements by the developers regarding the decision making process when creating new Pokémon. Should we ever meet some of the people responsible for designing the game, we would have numerous questions to ask but, in the meantime, we hope that the logic, or lack thereof, behind Pokémon creation can be better understood by our work.
 
-##Appendix
+## Appendix
 
-###Data Source
+### Data Source
 
 https://www.kaggle.com/kylekohnen/complete-pokemon-data-set
 
-###Background Information Sources
+### Background Information Sources
 
 Catch Rate Info: https://bulbapedia.bulbagarden.net/wiki/Catch_rate
 
@@ -329,9 +332,9 @@ The actual show: https://www.netflix.com/watch/81198528?source=35&trackId=254743
 
 
 
-###Code 
+### Code 
 
-``` {r, eval = FALSE}
+``` {r,echo = TRUE, eval = FALSE}
 
 # read in data.
 pokemon <- read_csv(".\\data\\pokemon.csv")
