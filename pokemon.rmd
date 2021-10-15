@@ -63,7 +63,7 @@ pokemon_new <-  pokemon %>%
 
 Pokémon, a Japanese card and video game, revolves around a fantasy world where people fight each other with creatures they find, capture, and then domesticate. Each creature, or Pokémon, can be characterized by certain attributes including type (fire, grass, poison etc.), identifiers (legendary vs non-legendary etc.), and skill points (health, attack, defense etc.). Within the world of Pokémon, this information is stored in what is known as the Pokedex. Our dataset is a CSV that takes all the attributes of every pokemon and collects into one usable, real-world version of the Pokedex. Though the dataset includes 49 variables, we primarily looked at speed, capture rate, and happiness. We choose these variables for a variety of reasons. Speed was chosen, because during the exploratory portion of the project we found that speed and weight had no significant correlation. So, I [Connor] decided to investigate if the developers of the game correlated speed to any other variables. The lack of relationship between weight and speed made us distrust the development of the game. It seemed as though the developers did not put much thought into the values they gave each Pokémon. Given that we were already looking at speed, I [Miguel] wanted to see if the capture rate had any predictors. I [Nate] decided to do the same but with the base happiness of the Pokémon. Each portion of the analysis will be discussed in more detail throughout the paper to give context to variables and analysis ideas.
 
-![The pokedex entry for Pikachu. Includes info such as type, height, and weight](".\\Pokedex_Picture")
+![The pokedex entry for Pikachu. Includes info such as type, height, and weight](".\\Pokedex_Picture"){}
 
 
 
@@ -81,7 +81,7 @@ spdvswgt <- ggplot(pokemon, aes(x =weight, y =speed, color= gen_introduced)) +
   labs(title="Weight vs Speed", x= "Weight", y="Speed")+
   xlim(c(0, max(pokemon$weight))) + 
   ylim(c(0, max(pokemon$speed)))+
-  viridis::scale_color_viridis()
+  viridis::scale_color_viridis(name = "Generation")
  
 
 #Spvs Height (organized by Generation)
@@ -90,7 +90,7 @@ spdvshgt <- ggplot(pokemon, aes(x =speed, y =height, color= gen_introduced)) +
   labs(title="Speed vs Height", x= "Speed", y="Height")+
   xlim(c(0, max(pokemon$speed))) + 
   ylim(c(0, max(pokemon$height)))+
-  viridis::scale_color_viridis()+
+  viridis::scale_color_viridis(name = "Generation")+
   theme(plot.title = element_text(hjust = 0.5))
 
 spdvswgt
@@ -110,7 +110,7 @@ ggplot(pokemon, aes(x =speed, y =capture_rate,  color= gen_introduced)) +
   xlim(c(0, max(pokemon$speed))) + 
   ylim(c(0, max(pokemon$capture_rate)))+
   geom_smooth(se=FALSE)+
-  viridis::scale_color_viridis()+
+  viridis::scale_color_viridis(name = "Generation")+
   theme(plot.title = element_text(hjust = 0.5))
 
 ```
@@ -127,8 +127,8 @@ spdvsatk <-ggplot(pokemon, aes(x =speed, y =attack,  color= gen_introduced)) +
   labs(title="Speed vs Attack", x= "Speed", y="Attack")+
   xlim(c(0, max(pokemon$speed))) + 
   ylim(c(0, max(pokemon$attack)))+
-  geom_smooth()+
-  viridis::scale_color_viridis()+
+  geom_smooth(se = FALSE)+
+  scale_color_viridis(name = "Generation")+
   theme(plot.title = element_text(hjust = 0.5))
 
 #Speed vs Defense
@@ -137,8 +137,8 @@ spdvsdef <-ggplot(pokemon, aes(x =speed, y =defense,  color= gen_introduced)) +
   labs(title="Speed vs Defense", x= "Speed", y="Defense")+
   xlim(c(0, max(pokemon$speed))) + 
   ylim(c(0, max(pokemon$defense)))+
-  geom_smooth()+
-  viridis::scale_color_viridis()+
+  geom_smooth(se = FALSE)+
+  scale_color_viridis(name = "Generation")+
   theme(plot.title = element_text(hjust = 0.5))
 
 spdvsatk+spdvsdef
@@ -150,6 +150,7 @@ The results found that attack tends to have a slight positive correlation with s
 ### Capture Rate
 
 #### Size versus Capture Rate
+
 
 As mentioned earlier, I [Miguel] wanted to test the game developers and see if anything predicted capture rate. Capture rate describes how easy it is to capture a Pokémon found in the wild. The lower
 the capture rate, the harder the Pokémon is to capture. For more information on capture rate, a detailed description can be found at: https://bulbapedia.bulbagarden.net/wiki/Catch_rate. Of the variables in the dataset I first decided to look at the influence of height, weight, and then BMI. It made intuitive sense to me that bigger Pokémon would be harder to capture so I decided to test it out.
@@ -193,13 +194,20 @@ As can be seen, size does have an influence on the rate of capture. The taller a
 
 #### Other variables of interest
 
+
 After learning more about the relationship between size and capture rate, I decided to see how other variables may affect the capture rate. The first one I examined was the shape of the Pokémon. Shapes include armor, quadraped, upright and more. 
 ```{r}
 
 #Boxplot comparing the capture rate for different Pokémon shapes
 p1 <- ggplot(pokemon_new) +
   geom_boxplot(aes(reorder(shape, capture_rate, FUN = median), capture_rate)) +
-  labs(x = "Shape", y = "Capture Rate")
+  labs(x = "Shape", y = "Capture Rate") +
+  theme(
+    panel.grid.major.y = element_blank(),
+    axis.text.y = element_blank(),
+    axis.ticks.y = element_blank(),
+    axis.text.x.bottom = element_text(angle = 60, vjust = 1, hjust = 1)
+  )
 
 p1
 ```
@@ -293,10 +301,10 @@ m1
 We were also curious if the female rate effected happiness of the Pokémon. Converting the happiness variable to a likert scale we can easily see the amount of data points in each bin of female rate in the following plot. As seen in the plots before there is a smaller amount of Pokémon with a high female rate. Notice how it appears that depending of the female rate there are different levels of happiness that are observed. What stood out to us what that Pokémon with a female rate of 0.25 or 0.875 are only observed with neutral happiness and there are no very unhappy Pokémon with a rate of 1. There is no apparent correlation between happiness and female rate.
 
 ```{r}
-pokemon_new |> ggplot(aes(as.factor(female_rate), happiness)) +
+pokemon_new |> ggplot(aes(as.factor(female_rate * 100), happiness)) +
   geom_bin2d(alpha = .9) +
   scale_fill_viridis_c() +
-  labs(title = "Happiness of Pokémon by Female Rate", x = "Female Rate", y = "Happiness") +
+  labs(title = "Happiness of Pokémon by Female Rate", x = "Percent Female (%)", y = "Happiness") +
   theme(panel.grid.major.x = element_blank())
 ```
 
