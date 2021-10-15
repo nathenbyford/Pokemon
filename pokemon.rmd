@@ -76,18 +76,18 @@ This included testing whether real life factors such as weight and height affect
 
 ```{r}
 #Weight vs Speed (organized by Generation)
-spdvswgt <- ggplot(pokemon, aes(x =weight, y =speed, color= gen_introduced)) +
+spdvswgt <- ggplot(pokemon, aes(x =weight/10, y =speed, color= gen_introduced)) +
   geom_point()+
-  labs(title="Weight vs Speed", x= "Weight", y="Speed")+
+  labs(title="Weight vs Speed", x= "Weight (kg)", y="Speed")+
   xlim(c(0, max(pokemon$weight))) + 
   ylim(c(0, max(pokemon$speed)))+
   viridis::scale_color_viridis(name = "Generation")
  
 
 #Spvs Height (organized by Generation)
-spdvshgt <- ggplot(pokemon, aes(x =speed, y =height, color= gen_introduced)) +
+spdvshgt <- ggplot(pokemon, aes(x =speed, y =height/10, color= gen_introduced)) +
   geom_point()+
-  labs(title="Speed vs Height", x= "Speed", y="Height")+
+  labs(title="Speed vs Height", x= "Speed", y="Height (m)")+
   xlim(c(0, max(pokemon$speed))) + 
   ylim(c(0, max(pokemon$height)))+
   viridis::scale_color_viridis(name = "Generation")+
