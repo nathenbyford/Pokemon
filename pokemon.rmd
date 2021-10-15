@@ -65,7 +65,7 @@ Pokémon, a Japanese card and video game, revolves around a fantasy world where 
 
 ![The pokedex entry for Pikachu. Includes info such as type, height, and weight](".\\Pokedex_Picture")
 
->>>>>>> e14794bf5c0251c6de984ddef72b80e3f9e383e3
+
 
 ## Questions and Findings
 
@@ -94,7 +94,7 @@ spdvshgt <- ggplot(pokemon, aes(x =speed, y =height, color= gen_introduced)) +
   theme(plot.title = element_text(hjust = 0.5))
 
 spdvswgt
-spdvshgt
+
 ```
 Looking at the graph for weight and speed, we noticed that there are outliers (on the right side of the graph) that do not make sense for speed. To see whether this was a mistake or not, we looked at the generation of each Pokémon  and found that the majority of the outliers came from the most recent generation rather than the earlier generations when Pokémon's system of attributes were still in the works. In addition to weight, height did not have an affect on the speed of a Pokémon, thus defying all of our expectations of this data set.
 
