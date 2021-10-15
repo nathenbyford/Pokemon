@@ -81,7 +81,7 @@ the capture rate, the harder the Pokémon is to capture. Initially our belief wa
 #Limit to not include a lot of empty space
 BMI <- ggplot(pokemon_new, aes(BMI, capture_rate)) +
   geom_jitter(alpha = 0.2, color = "Steel Blue", size = .5) +
-  geom_smooth(se = FALSE) +
+  geom_smooth(se = FALSE, color = "Steel blue") +
   coord_cartesian(ylim = c(0,275)) +
   labs(x = "Body Mass Index", y = "Capture Rate")
 
@@ -90,7 +90,7 @@ BMI <- ggplot(pokemon_new, aes(BMI, capture_rate)) +
 #Limit included to allow for best view of relationship
 Height <- ggplot(pokemon_new, aes(height/10, capture_rate)) +
   geom_jitter(alpha = 0.2, color = "Steel Blue", size = .5) +
-  geom_smooth(se = FALSE) +
+  geom_smooth(se = FALSE, color = "Steel blue") +
   coord_cartesian(xlim = c(0,5), ylim = c(0,275)) +
   labs(x = "Height (m)", y = NULL)
   
@@ -99,7 +99,7 @@ Height <- ggplot(pokemon_new, aes(height/10, capture_rate)) +
 
 Weight <- ggplot(pokemon_new, aes(weight/10, capture_rate)) + 
   geom_jitter(alpha = 0.2, color = "Steel blue", size = .5) +
-  geom_smooth(alpha = 0.5, se = FALSE) +
+  geom_smooth(alpha = 0.5, se = FALSE , color = "Steel blue") +
   coord_cartesian(ylim = c(0,275)) +
   labs(x = "Weight (kg)", y = "Capture Rate")
 
