@@ -1,7 +1,9 @@
-setwd("C:/Users/Connor/Desktop/CompStat4373/CompStat/Project 1 Pokemon")
+#Connor Bryson
+#Pokemon
+
 library(tidyverse)
 library(patchwork)
-
+library(viridisLite)
 
 
 pokemon <- read.csv("pokemon.csv")
@@ -14,22 +16,24 @@ theme_set(theme_bw() +
             )
 )
 
-#Weight vs Speed (organized by Generatiion)- BEST PLOT
+#Weight vs Speed (organized by Generation)- BEST PLOT
 ggplot(pokemon, aes(x =weight, y =speed, color= gen_introduced)) +
   geom_point()+
   labs(title="Weight vs Speed", x= "Weight", y="Speed")+
   xlim(c(0, max(pokemon$weight))) + 
   ylim(c(0, max(pokemon$speed)))+
   viridis::scale_color_viridis()+
+  theme(plot.title = element_text(hjust = 0.5))
  
 
 #Speed vs Height
 ggplot(pokemon, aes(x =speed, y =height, color= gen_introduced)) +
   geom_point()+
+  labs(title="Speed vs Height", x= "Speed", y="Height")+
   xlim(c(0, max(pokemon$speed))) + 
   ylim(c(0, max(pokemon$height)))+
-  geom_smooth()+
-  viridis::scale_color_viridis()
+  viridis::scale_color_viridis()+
+  theme(plot.title = element_text(hjust = 0.5))
   
 
 
@@ -38,10 +42,12 @@ ggplot(pokemon, aes(x =speed, y =height, color= gen_introduced)) +
 #Speed vs Capture Rate - It seems as the pokemon get faster, 
 ggplot(pokemon, aes(x =speed, y =capture_rate,  color= gen_introduced)) +
   geom_point()+
+  labs(title="Speed vs Capture Rate", x= "Speed", y="Capture Rate")+
   xlim(c(0, max(pokemon$speed))) + 
   ylim(c(0, max(pokemon$capture_rate)))+
   geom_smooth(se=FALSE)+
-  viridis::scale_color_viridis()
+  viridis::scale_color_viridis()+
+  theme(plot.title = element_text(hjust = 0.5))
 
 
 
@@ -49,16 +55,22 @@ ggplot(pokemon, aes(x =speed, y =capture_rate,  color= gen_introduced)) +
 #Speed vs Attack - Little bit of correlation
 ggplot(pokemon, aes(x =speed, y =attack,  color= gen_introduced)) +
   geom_point()+
+  labs(title="Speed vs Attack", x= "Speed", y="Attack")+
   xlim(c(0, max(pokemon$speed))) + 
   ylim(c(0, max(pokemon$attack)))+
-  geom_smooth()
+  geom_smooth()+
+  viridis::scale_color_viridis()+
+  theme(plot.title = element_text(hjust = 0.5))
 
 #Speed vs Defense - No relationship really
 ggplot(pokemon, aes(x =speed, y =defense,  color= gen_introduced)) +
   geom_point()+
+  labs(title="Speed vs Defense", x= "Speed", y="Defense")+
   xlim(c(0, max(pokemon$speed))) + 
   ylim(c(0, max(pokemon$defense)))+
-  geom_smooth()
+  geom_smooth()+
+  viridis::scale_color_viridis()+
+  theme(plot.title = element_text(hjust = 0.5))
 
 
 
@@ -152,8 +164,11 @@ speedvsfemalerate<- ggplot(pokemon, aes(x =speed, y =female_rate)) +
 
 
 
-
-
+#Separating Pokemon by Type and BMI
+pokemon_new <-  pokemon %>%
+  separate(typing, into = c("primary", "secondary")) %>%
+  mutate(BMI = (weight/10)/((height/10)^2)) %>%
+  filter(BMI <= 50000)
 
 
 #Speed vs Shape
@@ -171,11 +186,6 @@ ggplot(pokemon_new, aes(x =shape, y =speed)) +
 
 
 
-#Separating Pokemon by Type and BMI
-pokemon_new <-  pokemon %>%
-  separate(typing, into = c("primary", "secondary")) %>%
-  mutate(BMI = (weight/10)/((height/10)^2)) %>%
-  filter(BMI <= 50000)
 
 
 
