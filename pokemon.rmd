@@ -62,6 +62,7 @@ pokemon_new <-  pokemon %>%
 
 Pokémon, a Japanese card and video game, revolves around a fantasy world where people fight each other with creatures they find, capture, and then domesticate. Each creature, or Pokémon, can be characterized by certain attributes including type (fire, grass, poison etc.), identifiers (legendary vs non-legendary etc.), and skill points (health, attack, defense etc.). Our dataset is a CSV that takes all the attributes of every Pokémon and collects into one usable file. Though the dataset includes 49 variables, we primarily looked at speed, capture rate, and happiness. We choose these variables for a variety of reasons. Speed was chosen, because during the exploratory portion of the project we found that speed and weight had no significant correlation. So, we decided to investigate if the developers of the game correlated speed to any other variables. The lack of relationship between weight and speed made us distrust the development of the game. It seemed as though the developers did not put much thought into the values they gave each Pokémon. Given that we were already looking at speed, I [Miguel] wanted to see if the capture rate had any predictors. I [Nate] decided to do the same but with the base happiness of the Pokémon. Each portion of the analysis will be discussed in more detail throughout the paper to give context to variables and analysis ideas.
 
+![The pokedex entry for Pikachu. Includes info such as type, height, and weight](".\\Pokedex_Picture")
 
 
 ## Questions and Findings
@@ -74,7 +75,8 @@ We want to begin with looking into what factors effect the speed of the Pokemon.
 ### Capture Rate
 
 As mentioned earlier, I [Miguel] wanted to test the game developers and see if anything predicted capture rate. Capture rate describes how easy it is to capture a Pokémon found in the wild. The lower
-the capture rate, the harder the Pokémon is to capture. For more information on capture rate, a detailed description can be found at: Initially our belief was that the larger the Pokémon, the harder it would be to capture so we decided to compare capture rate to BMI, Height and Weight. We then wanted to see how certain categorical variables affected capture rate in the hopes of finding a pattern in how the game developers determined capture rate.
+the capture rate, the harder the Pokémon is to capture. For more information on capture rate, a detailed description can be found at: https://bulbapedia.bulbagarden.net/wiki/Catch_rate. Of the variables 
+Initially our belief was that the larger the Pokémon, the harder it would be to capture so we decided to compare capture rate to BMI, Height and Weight. We then wanted to see how certain categorical variables affected capture rate in the hopes of finding a pattern in how the game developers determined capture rate.
 
 ``` {r}
 
