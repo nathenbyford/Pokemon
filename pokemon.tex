@@ -1,0 +1,312 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\title{Pokemon Analysis}
+\author{Connor Bryson, Nathen Byford, Miguel Iglesias}
+\date{10/12/2021}
+
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={Pokemon Analysis},
+  pdfauthor={Connor Bryson, Nathen Byford, Miguel Iglesias},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+
+\begin{document}
+\maketitle
+
+\hypertarget{introduction}{%
+\subsection{Introduction}\label{introduction}}
+
+Pokémon, a Japanese card and video game, revolves around a fantasy world
+where people fight each other with creatures they find and domesticate.
+Each creature, or Pokémon, can be characterized by certain attributes
+from health points (hp), to their typing which includes fire-Pokémon,
+water-Pokémon, and grass-Pokémon among others. Our dataset is a CSV that
+takes all the defined characteristics of the Pokémon and collects into
+one useable file. Though the dataset includes 49 variables, the ones we
+are using include: \_\_\_\_\_\_\_\_\_\_\_. One variable of interest,
+speed, is noteworthy because during the exploratory period of this
+project, we found that there was no relationship between speed and
+weight. This does not make intuitive sense, so we sought to identify if
+any other variable could correlate with speed.
+
+\hypertarget{questions-and-findings}{%
+\subsection{Questions and Findings}\label{questions-and-findings}}
+
+\hypertarget{speed}{%
+\subsubsection{Speed}\label{speed}}
+
+We want to begin with looking into what factors effect the speed of the
+Pokemon.
+
+\hypertarget{capture-rate}{%
+\subsubsection{Capture Rate}\label{capture-rate}}
+
+We also wanted to look into how capture rate is effected by variables
+such as height, weight, gender, and legendary. Capture rate describes
+how easy it is to capture a Pokémon found in the wild. The lower the
+capture rate, the harder the Pokémon is to capture. Initially our belief
+was that the larger the Pokémon, the harder it would be to capture so we
+decided to compare capture rate to BMI, Height and Weight. We then
+wanted to see how certain categorical variables affected capture rate in
+the hopes of finding a pattern in how the game developers determined
+capture rate.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Create a plot that shows the relationship between capture\_rate and BMI}
+\CommentTok{\#Limit to not include a lot of empty space}
+\NormalTok{BMI }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(pokemon\_new, }\FunctionTok{aes}\NormalTok{(BMI, capture\_rate)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_jitter}\NormalTok{(}\AttributeTok{alpha =} \FloatTok{0.2}\NormalTok{, }\AttributeTok{color =} \StringTok{"Steel Blue"}\NormalTok{, }\AttributeTok{size =}\NormalTok{ .}\DecValTok{5}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{geom\_smooth}\NormalTok{(}\AttributeTok{se =} \ConstantTok{FALSE}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{coord\_cartesian}\NormalTok{(}\AttributeTok{ylim =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{275}\NormalTok{)) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{x =} \StringTok{"Body Mass Index"}\NormalTok{, }\AttributeTok{y =} \StringTok{"Capture Rate"}\NormalTok{)}
+
+
+\CommentTok{\#Create a plot that shows the relationship between capture\_rate and Height}
+\CommentTok{\#Limit included to allow for best view of relationship}
+\NormalTok{Height }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(pokemon\_new, }\FunctionTok{aes}\NormalTok{(height}\SpecialCharTok{/}\DecValTok{10}\NormalTok{, capture\_rate)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_jitter}\NormalTok{(}\AttributeTok{alpha =} \FloatTok{0.2}\NormalTok{, }\AttributeTok{color =} \StringTok{"Steel Blue"}\NormalTok{, }\AttributeTok{size =}\NormalTok{ .}\DecValTok{5}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{geom\_smooth}\NormalTok{(}\AttributeTok{se =} \ConstantTok{FALSE}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{coord\_cartesian}\NormalTok{(}\AttributeTok{xlim =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{5}\NormalTok{), }\AttributeTok{ylim =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{275}\NormalTok{)) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{x =} \StringTok{"Height (m)"}\NormalTok{, }\AttributeTok{y =} \ConstantTok{NULL}\NormalTok{)}
+  
+\CommentTok{\#Create a plot that shows the relationship between capture\_rate and weight}
+\CommentTok{\#Limit included to allow for best view of relationship}
+
+\NormalTok{Weight }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(pokemon\_new, }\FunctionTok{aes}\NormalTok{(weight}\SpecialCharTok{/}\DecValTok{10}\NormalTok{, capture\_rate)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_jitter}\NormalTok{(}\AttributeTok{alpha =} \FloatTok{0.2}\NormalTok{, }\AttributeTok{color =} \StringTok{"Steel blue"}\NormalTok{, }\AttributeTok{size =}\NormalTok{ .}\DecValTok{5}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{geom\_smooth}\NormalTok{(}\AttributeTok{alpha =} \FloatTok{0.5}\NormalTok{, }\AttributeTok{se =} \ConstantTok{FALSE}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{coord\_cartesian}\NormalTok{(}\AttributeTok{ylim =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{275}\NormalTok{)) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{x =} \StringTok{"Weight (kg)"}\NormalTok{, }\AttributeTok{y =} \StringTok{"Capture Rate"}\NormalTok{)}
+
+
+\NormalTok{BMI }\SpecialCharTok{/}\NormalTok{ (Weight }\SpecialCharTok{|}\NormalTok{ Height)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## `geom_smooth()` using method = 'gam' and formula 'y ~ s(x, bs = "cs")'
+## `geom_smooth()` using method = 'gam' and formula 'y ~ s(x, bs = "cs")'
+## `geom_smooth()` using method = 'gam' and formula 'y ~ s(x, bs = "cs")'
+\end{verbatim}
+
+\includegraphics{pokemon_files/figure-latex/unnamed-chunk-1-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{p1 }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(pokemon\_new) }\SpecialCharTok{+}
+  \FunctionTok{geom\_boxplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\FunctionTok{reorder}\NormalTok{(shape, capture\_rate, }\AttributeTok{FUN =}\NormalTok{ median), capture\_rate)) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{x =} \StringTok{"Shape"}\NormalTok{, }\AttributeTok{y =} \StringTok{"Capture Rate"}\NormalTok{)}
+
+\NormalTok{p2 }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(pokemon\_new, }\FunctionTok{aes}\NormalTok{(mythical, capture\_rate)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_boxplot}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{x =} \StringTok{"Mythical"}\NormalTok{, }\AttributeTok{y =} \StringTok{"Capture Rate"}\NormalTok{)}
+
+\NormalTok{p3 }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(pokemon\_new, }\FunctionTok{aes}\NormalTok{(legendary, capture\_rate)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_boxplot}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{x =} \StringTok{"Legendary"}\NormalTok{, }\AttributeTok{y =} \ConstantTok{NULL}\NormalTok{)}
+
+\NormalTok{p4 }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(pokemon\_new, }\FunctionTok{aes}\NormalTok{(genderless, capture\_rate)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_boxplot}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{x =} \StringTok{"Genderless"}\NormalTok{, }\AttributeTok{y =} \ConstantTok{NULL}\NormalTok{)}
+
+\NormalTok{p5 }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(pokemon\_new, }\FunctionTok{aes}\NormalTok{(baby\_pokemon, capture\_rate)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_boxplot}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{x =} \StringTok{"Baby Pokemon"}\NormalTok{, }\AttributeTok{y =} \ConstantTok{NULL}\NormalTok{)}
+ 
+\NormalTok{p6 }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(pokemon\_new, }\FunctionTok{aes}\NormalTok{(}\FunctionTok{as.factor}\NormalTok{(female\_rate}\SpecialCharTok{*}\DecValTok{100}\NormalTok{), capture\_rate)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_boxplot}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{x =} \StringTok{"Percent Female"}\NormalTok{, }\AttributeTok{y =} \StringTok{"Capture Rate"}\NormalTok{)}
+             
+\NormalTok{(p2 }\SpecialCharTok{|}\NormalTok{ p3 }\SpecialCharTok{|}\NormalTok{ p4}\SpecialCharTok{|}\NormalTok{ p5) }\SpecialCharTok{/}\NormalTok{ p6}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{pokemon_files/figure-latex/unnamed-chunk-1-2.pdf}
+
+\hypertarget{happiness}{%
+\subsubsection{Happiness}\label{happiness}}
+
+Lastly we wanted to see what factors effected the happiness of the
+Pokemon. This variable was just something we thought would be fun to
+look into. Our main questions were what other variables effect the
+Pokemon's happiness. We began with looking at if the Pokemon is a
+legendary and if it's a mythical Pokemon.
+
+To get a grasp of what effects different variables had on the happiness
+of the Pokemon we took a look at how different characteristics of the
+Pokemon had an effect. Bellow are three violin plots looking at
+mythical, legendary, and baby Pokemon and comparing them to Pokemon
+without that attribute based on happiness. It is fairly obvious that
+mythical and legendary Pokemon tend to be less happy, I thinkk that
+could be that they are tougher pokemon so when they are captured they
+are not happy about it. These Pokemon like to have free reign and not be
+controlled by trainers. While the Baby Pokemon look to be as happy or
+more happy than most other pokemon.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{v1 }\OtherTok{\textless{}{-}}\NormalTok{ pokemon\_new }\SpecialCharTok{|}\ErrorTok{\textgreater{}} \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(mythical, base\_happiness)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_violin}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"Mythical Pokemon"}\NormalTok{, }\AttributeTok{x =} \StringTok{"Mythical"}\NormalTok{, }\AttributeTok{y =} \StringTok{"Happiness"}\NormalTok{)}
+
+\NormalTok{v2 }\OtherTok{\textless{}{-}}\NormalTok{ pokemon\_new }\SpecialCharTok{|}\ErrorTok{\textgreater{}} \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(legendary, base\_happiness)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_violin}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"Legendary"}\NormalTok{, }\AttributeTok{x =} \StringTok{"Legendary"}\NormalTok{, }\AttributeTok{y =} \ConstantTok{NULL}\NormalTok{)}
+
+\NormalTok{v3 }\OtherTok{\textless{}{-}}\NormalTok{ pokemon\_new }\SpecialCharTok{|}\ErrorTok{\textgreater{}} \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(baby\_pokemon, base\_happiness)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_violin}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"Baby Pokemon"}\NormalTok{, }\AttributeTok{x =} \StringTok{"Baby Pokemon"}\NormalTok{, }\AttributeTok{y =} \ConstantTok{NULL}\NormalTok{)}
+
+\NormalTok{(v1 }\SpecialCharTok{+}\NormalTok{ v2 }\SpecialCharTok{+}\NormalTok{ v3)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{pokemon_files/figure-latex/unnamed-chunk-2-1.pdf}
+
+We also looked at how the Pokemon primary type effects it's happiness.
+Looking at the mosaic plot below we can see that there are different
+distributions of happiness bases upon primary type. Some observations to
+be made is that the most unhappy pokemon types are dragon, dark, and
+steel. Also the majority of Pokemon appear to be neutral.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{m1 }\OtherTok{\textless{}{-}}\NormalTok{ pokemon\_new }\SpecialCharTok{|}\ErrorTok{\textgreater{}} \FunctionTok{ggplot}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{geom\_mosaic}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \FunctionTok{product}\NormalTok{(happiness, primary), }\AttributeTok{fill =}\NormalTok{ happiness)) }\SpecialCharTok{+} 
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"Pokemon Happiness by Primary Type"}\NormalTok{, }\AttributeTok{x =} \StringTok{"Primary Type"}\NormalTok{, }
+       \AttributeTok{y =} \StringTok{"Happiness"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme}\NormalTok{(}
+    \AttributeTok{panel.grid.major.y =} \FunctionTok{element\_blank}\NormalTok{(),}
+    \AttributeTok{axis.text.y =} \FunctionTok{element\_blank}\NormalTok{(),}
+    \AttributeTok{axis.ticks.y =} \FunctionTok{element\_blank}\NormalTok{(),}
+    \AttributeTok{axis.text.x.bottom =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{angle =} \DecValTok{60}\NormalTok{, }\AttributeTok{vjust =} \DecValTok{1}\NormalTok{, }\AttributeTok{hjust =} \DecValTok{1}\NormalTok{)}
+\NormalTok{  )}
+
+\NormalTok{m1}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{pokemon_files/figure-latex/unnamed-chunk-3-1.pdf}
+
+We were also curious if the female rate effected happiness of the
+Pokemon. Converting the happiness variable to a likert scale we can
+easily see the amount of data points in each bin of female rate in the
+following plot. As seen in the plots before there is a smaller amount of
+Pokemon with a high female rate. Notice how it appears that depending of
+the female rate there are different levels of happiness that are
+observed. What stood out to us what that Pokemon with a female rate of
+0.25 or 0.875 are only observed with neutral happiness and there are no
+very unhappy Pokemon with a rate of 1. There is no apparent correlation
+between happiness and female rate.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{pokemon\_new }\SpecialCharTok{|}\ErrorTok{\textgreater{}} \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\FunctionTok{as.factor}\NormalTok{(female\_rate), happiness)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_bin2d}\NormalTok{(}\AttributeTok{alpha =}\NormalTok{ .}\DecValTok{9}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{scale\_fill\_viridis\_c}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"Happiness of Pokemon by Female Rate"}\NormalTok{, }\AttributeTok{x =} \StringTok{"Female Rate"}\NormalTok{, }\AttributeTok{y =} \StringTok{"Happiness"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{panel.grid.major.x =} \FunctionTok{element\_blank}\NormalTok{())}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{pokemon_files/figure-latex/unnamed-chunk-4-1.pdf}
+
+\end{document}

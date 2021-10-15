@@ -8,6 +8,7 @@ output: pdf_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE,fig.height = 2.5)
 library("patchwork")
+library("ggmosaic")
 library("tidyverse")
 theme_set(
   theme_bw() +
@@ -59,7 +60,14 @@ pokemon_new <-  pokemon %>%
 
 ## Introduction
 
+<<<<<<< HEAD
 Pokémon, a Japanese card and video game, revolves around a fantasy world where people fight each other with creatures they find and domesticate. Each creature, or Pokémon, can be characterized by certain attributes from health points (hp), to their typing which includes fire-Pokémon, water-Pokémon, and grass-Pokémon among others. Our dataset is a CSV that takes all the defined characteristics of the Pokémon and collects into one useable file. Though the dataset includes 49 variables, the ones we are using include: ___________. 
+=======
+Pokémon, a Japanese card and video game, revolves around a fantasy world where people fight each other with creatures they find, capture, and then domesticate. Each creature, or Pokémon, can be characterized by certain attributes including type (fire, grass, poison etc.), identifiers (legendary vs non-legendary etc.), and skill points (health, attack, defense etc.). Our dataset is a CSV that takes all the attributes of every Pokémon and collects into one usable file. Though the dataset includes 49 variables, we primarily looked at speed, capture rate, and happiness. We choose these variables for a variety of reasons. Speed was chosen, because during the exploratory portion of the project we found that speed and weight had no significant correlation. So, we decided to investigate if the developers of the game correlated speed to any other variables. The lack of relationship between weight and speed made us distrust the development of the game. It seemed as though the developers did not put much thought into the values they gave each Pokémon. Given that we were already looking at speed, I [Miguel] wanted to see if the capture rate had any predictors. I [Nate] decided to do the same but with the base happiness of the Pokémon. Each portion of the analysis will be discussed in more detail throughout the paper to give context to variables and analysis ideas.
+
+![The pokedex entry for Pikachu. Includes info such as type, height, and weight](".\\Pokedex_Picture")
+
+>>>>>>> e14794bf5c0251c6de984ddef72b80e3f9e383e3
 
 ## Questions and Findings
 
@@ -140,8 +148,9 @@ The results found that attack tends to have a slight positive correlation with s
 
 ### Capture Rate
 
-We also wanted to look into how capture rate is effected by variables such as height, weight, gender, and legendary. Capture rate describes how easy it is to capture a Pokémon found in the wild. The lower
-the capture rate, the harder the Pokémon is to capture. Initially our belief was that the larger the Pokémon, the harder it would be to capture so we decided to compare capture rate to BMI, Height and Weight. We then wanted to see how certain categorical variables affected capture rate in the hopes of finding a pattern in how the game developers determined capture rate.
+As mentioned earlier, I [Miguel] wanted to test the game developers and see if anything predicted capture rate. Capture rate describes how easy it is to capture a Pokémon found in the wild. The lower
+the capture rate, the harder the Pokémon is to capture. For more information on capture rate, a detailed description can be found at: https://bulbapedia.bulbagarden.net/wiki/Catch_rate. Of the variables 
+Initially our belief was that the larger the Pokémon, the harder it would be to capture so we decided to compare capture rate to BMI, Height and Weight. We then wanted to see how certain categorical variables affected capture rate in the hopes of finding a pattern in how the game developers determined capture rate.
 
 ``` {r}
 
@@ -150,7 +159,7 @@ the capture rate, the harder the Pokémon is to capture. Initially our belief wa
 #Limit to not include a lot of empty space
 BMI <- ggplot(pokemon_new, aes(BMI, capture_rate)) +
   geom_jitter(alpha = 0.2, color = "Steel Blue", size = .5) +
-  geom_smooth(se = FALSE) +
+  geom_smooth(se = FALSE, color = "Steel blue") +
   coord_cartesian(ylim = c(0,275)) +
   labs(x = "Body Mass Index", y = "Capture Rate")
 
@@ -159,7 +168,7 @@ BMI <- ggplot(pokemon_new, aes(BMI, capture_rate)) +
 #Limit included to allow for best view of relationship
 Height <- ggplot(pokemon_new, aes(height/10, capture_rate)) +
   geom_jitter(alpha = 0.2, color = "Steel Blue", size = .5) +
-  geom_smooth(se = FALSE) +
+  geom_smooth(se = FALSE, color = "Steel blue") +
   coord_cartesian(xlim = c(0,5), ylim = c(0,275)) +
   labs(x = "Height (m)", y = NULL)
   
@@ -168,12 +177,12 @@ Height <- ggplot(pokemon_new, aes(height/10, capture_rate)) +
 
 Weight <- ggplot(pokemon_new, aes(weight/10, capture_rate)) + 
   geom_jitter(alpha = 0.2, color = "Steel blue", size = .5) +
-  geom_smooth(alpha = 0.5, se = FALSE) +
+  geom_smooth(alpha = 0.5, se = FALSE , color = "Steel blue") +
   coord_cartesian(ylim = c(0,275)) +
   labs(x = "Weight (kg)", y = "Capture Rate")
 
 
-BMI / (Weight | Height)
+(Weight | Height) / BMI
 
 
 p1 <- ggplot(pokemon_new) +
@@ -209,7 +218,7 @@ p6 <- ggplot(pokemon_new, aes(as.factor(female_rate*100), capture_rate)) +
 
 Lastly we wanted to see what factors effected the happiness of the Pokemon. This variable was just something we thought would be fun to look into. Our main questions were what other variables effect the Pokemon's happiness. We began with looking at if the Pokemon is a legendary and if it's a mythical Pokemon.
 
-To get a grasp of what effects different variables had on the happiness of the Pokemon we took a look at how different characteristics of the Pokemon had an effect. Bellow are three violin plots looking at mythical, legendary, and baby Pokemon and comparing them to Pokemon without that attribute. 
+To get a grasp of what effects different variables had on the happiness of the Pokemon we took a look at how different characteristics of the Pokemon had an effect. Bellow are three violin plots looking at mythical, legendary, and baby Pokemon and comparing them to Pokemon without that attribute based on happiness. It is  fairly obvious that mythical and legendary Pokemon tend to be less happy, I thinkk that could be that they are tougher pokemon so when they are captured they are not happy about it. These Pokemon like to have free reign and not be controlled by trainers. While the Baby Pokemon look to be as happy or more happy than most other pokemon.  
 
 ```{r, fig.height=2}
 v1 <- pokemon_new |> ggplot(aes(mythical, base_happiness)) +
@@ -227,19 +236,21 @@ v3 <- pokemon_new |> ggplot(aes(baby_pokemon, base_happiness)) +
 (v1 + v2 + v3)
 ```
 
-We also looked at how the Pokemon primary type effects it's happiness. Looking at the box plot below we can see that there are diferent distributions of happiness bases upon primary type. Notable the only type with all possible values for happiness is Normal type, and the type with the least variability in all data points is flying type, but they still aren't very happy.
+We also looked at how the Pokemon primary type effects it's happiness. Looking at the mosaic plot below we can see that there are different distributions of happiness bases upon primary type. Some observations to be made is that the most unhappy pokemon types are dragon, dark, and steel. Also the majority of Pokemon appear to be neutral.
 
 ```{r}
-b4 <- pokemon_new |> ggplot(aes(reorder(primary, base_happiness, mean), base_happiness)) +
-  geom_boxplot() + 
-  labs(title = "Pokemon by Primary Type", x = "Primary Type", 
+m1 <- pokemon_new |> ggplot() +
+  geom_mosaic(aes(x = product(happiness, primary), fill = happiness)) + 
+  labs(title = "Pokemon Happiness by Primary Type", x = "Primary Type", 
        y = "Happiness") +
   theme(
-    axis.text.x.bottom = element_text(angle = 60, vjust = .5, hjust = 0.5),
-    panel.grid.major.x = element_blank()    
-    )
+    panel.grid.major.y = element_blank(),
+    axis.text.y = element_blank(),
+    axis.ticks.y = element_blank(),
+    axis.text.x.bottom = element_text(angle = 60, vjust = 1, hjust = 1)
+  )
 
-b4
+m1
 ```
 
 

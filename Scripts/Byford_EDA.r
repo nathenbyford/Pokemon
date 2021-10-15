@@ -2,6 +2,7 @@
 ## Pokemon
 
 library(patchwork)
+library("ggmosaic")
 library("tidyverse")
 
 theme_set(theme_bw() + 
@@ -210,13 +211,27 @@ b3 <- pokemon_new |> ggplot(aes(baby_pokemon, base_happiness)) +
   geom_boxplot() +
   labs(title = "Baby Pokemon", x = "Baby Pokemon", y = NULL)
 
-b4 <- pokemon_new |> ggplot(aes(reorder(primary, base_happiness, mean), base_happiness)) +
+b4 <- pokemon_new |> ggplot(aes(primary, base_happiness)) +
   geom_boxplot() + 
   labs(title = "Pokemon my Primary Type", x = "Primary Type", 
-       y = "Happiness")
+       y = "Happiness") +
+  
 
 (b1 + b2 + b3) / (b4)
 
 # combination of both
 
 (v1 + v2 + v3) / b4
+
+
+# Mosaic plot
+
+m1 <- pokemon_new |> ggplot() +
+  geom_mosaic(aes(x = product(happiness, primary), fill = happiness)) + 
+  labs(title = "Pokemon my Primary Type", x = "Primary Type", 
+       y = "Happiness") +
+  theme(
+    panel.grid.major.y = element_blank(),
+    axis.text.y = element_blank(),
+    axis.ticks.y = element_blank()
+  )
