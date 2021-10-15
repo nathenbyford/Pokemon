@@ -51,7 +51,7 @@ factorize <- function(x) {
 # New pokemon dataset to use, adds BMI and happiness
 pokemon_new <-  pokemon %>%
   separate(typing, into = c("primary", "secondary")) %>%
-  mutate(BMI = (weight/10)/((height/10)^2)) %>%
+  mutate(BMI = (weight / 10) / ((height / 10)^2)) %>%
   filter(BMI <= 50000) %>%
   mutate(happiness = factorize(factor(base_happiness, ordered = TRUE)))
 
@@ -80,7 +80,7 @@ the capture rate, the harder the Pokémon is to capture. Initially our belief wa
 #Limit to not include a lot of empty space
 BMI <- ggplot(pokemon_new, aes(BMI, capture_rate)) +
   geom_jitter(alpha = 0.2, color = "Steel Blue", size = .5) +
-  geom_smooth() +
+  geom_smooth(se = FALSE) +
   coord_cartesian(ylim = c(0,275)) +
   labs(x = "Body Mass Index", y = "Capture Rate")
 
@@ -89,7 +89,7 @@ BMI <- ggplot(pokemon_new, aes(BMI, capture_rate)) +
 #Limit included to allow for best view of relationship
 Height <- ggplot(pokemon_new, aes(height/10, capture_rate)) +
   geom_jitter(alpha = 0.2, color = "Steel Blue", size = .5) +
-  geom_smooth() +
+  geom_smooth(se = FALSE) +
   coord_cartesian(xlim = c(0,5), ylim = c(0,275)) +
   labs(x = "Height (m)", y = NULL)
   
@@ -98,7 +98,7 @@ Height <- ggplot(pokemon_new, aes(height/10, capture_rate)) +
 
 Weight <- ggplot(pokemon_new, aes(weight/10, capture_rate)) + 
   geom_jitter(alpha = 0.2, color = "Steel blue", size = .5) +
-  geom_smooth(alpha = 0.5) +
+  geom_smooth(alpha = 0.5, se = FALSE) +
   coord_cartesian(ylim = c(0,275)) +
   labs(x = "Weight (kg)", y = "Capture Rate")
 
@@ -139,7 +139,7 @@ p6 <- ggplot(pokemon_new, aes(as.factor(female_rate*100), capture_rate)) +
 
 Lastly we wanted to see what factors effected the happiness of the Pokemon. This variable was just something we thought would be fun to look into. Our main questions were what other variables effect the Pokemon's happiness. We began with looking at if the Pokemon is a legendary and if it's a mythical Pokemon.
 
-We were also curious if the female rate effected happiness of the Pokemon. Converting the happiness variable to a likert scale we can easily see the amount of data points in each bin of female rate in the following plot. As seen in the plots before there is a smaller amount of Pokemon with a high female rate. Notice how it appears that depending of the female rate there aredifferent levels of happiness that are observed. What stood out to us what that Pokemon with a female rate of 0.25 or 0.875 are only observed with neutral happiness and there are no very unhappy Pokemon with a rate of 1. There is no apparent correlation between happiness and female rate.
+We were also curious if the female rate effected happiness of the Pokemon. Converting the happiness variable to a likert scale we can easily see the amount of data points in each bin of female rate in the following plot. As seen in the plots before there is a smaller amount of Pokemon with a high female rate. Notice how it appears that depending of the female rate there are different levels of happiness that are observed. What stood out to us what that Pokemon with a female rate of 0.25 or 0.875 are only observed with neutral happiness and there are no very unhappy Pokemon with a rate of 1. There is no apparent correlation between happiness and female rate.
 
 ```{r}
 pokemon_new |> ggplot(aes(as.factor(female_rate), happiness)) +
