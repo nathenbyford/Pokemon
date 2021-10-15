@@ -104,7 +104,7 @@ Weight <- ggplot(pokemon_new, aes(weight/10, capture_rate)) +
   labs(x = "Weight (kg)", y = "Capture Rate")
 
 
-BMI / (Weight | Height)
+(Weight | Height) / BMI
 
 
 p1 <- ggplot(pokemon_new) +
