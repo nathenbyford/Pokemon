@@ -5,7 +5,6 @@ library(tidyverse)
 library(patchwork)
 library(viridisLite)
 
-
 pokemon <- read.csv(".\\data\\pokemon.csv")
 
 
