@@ -6,7 +6,7 @@ library(patchwork)
 library(viridisLite)
 
 
-pokemon <- read.csv("pokemon.csv")
+pokemon <- read.csv(".\\data\\pokemon.csv")
 
 
 theme_set(theme_bw() + 
