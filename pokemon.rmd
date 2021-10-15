@@ -73,7 +73,7 @@ Pokémon, a Japanese card and video game, revolves around a fantasy world where 
 
 ### Speed
 
-We want to begin with looking into what factors effect the speed of the Pokemon.
+I [Connor] want to begin with looking into what factors effect the speed of the Pokemon.
 This included testing whether real life factors such as weight and height affected the speed of the Pokemon. At first we believed they would, but as seen by the graphs below we were wrong. 
 
 ```{r}
