@@ -8,6 +8,7 @@ output: pdf_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE,fig.height = 2.5)
 library("patchwork")
+library("ggmosaic")
 library("tidyverse")
 theme_set(
   theme_bw() +
@@ -139,7 +140,7 @@ p6 <- ggplot(pokemon_new, aes(as.factor(female_rate*100), capture_rate)) +
 
 Lastly we wanted to see what factors effected the happiness of the Pokemon. This variable was just something we thought would be fun to look into. Our main questions were what other variables effect the Pokemon's happiness. We began with looking at if the Pokemon is a legendary and if it's a mythical Pokemon.
 
-To get a grasp of what effects different variables had on the happiness of the Pokemon we took a look at how different characteristics of the Pokemon had an effect. Bellow are three violin plots looking at mythical, legendary, and baby Pokemon and comparing them to Pokemon without that attribute. 
+To get a grasp of what effects different variables had on the happiness of the Pokemon we took a look at how different characteristics of the Pokemon had an effect. Bellow are three violin plots looking at mythical, legendary, and baby Pokemon and comparing them to Pokemon without that attribute based on happiness. It is  fairly obvious that mythical and legendary Pokemon tend to be less happy, I thinkk that could be that they are tougher pokemon so when they are captured they are not happy about it. These Pokemon like to have free reign and not be controlled by trainers. While the Baby Pokemon look to be as happy or more happy than most other pokemon.  
 
 ```{r, fig.height=2}
 v1 <- pokemon_new |> ggplot(aes(mythical, base_happiness)) +
@@ -157,19 +158,20 @@ v3 <- pokemon_new |> ggplot(aes(baby_pokemon, base_happiness)) +
 (v1 + v2 + v3)
 ```
 
-We also looked at how the Pokemon primary type effects it's happiness. Looking at the box plot below we can see that there are diferent distributions of happiness bases upon primary type. Notable the only type with all possible values for happiness is Normal type, and the type with the least variability in all data points is flying type, but they still aren't very happy.
+We also looked at how the Pokemon primary type effects it's happiness. Looking at the mosaic plot below we can see that there are different distributions of happiness bases upon primary type. Some observations to be made is that the most unhappy pokemon types are dragon, dark, and steel. Also the majority of Pokemon appear to be neutral.
 
 ```{r}
-b4 <- pokemon_new |> ggplot(aes(reorder(primary, base_happiness, mean), base_happiness)) +
-  geom_boxplot() + 
-  labs(title = "Pokemon by Primary Type", x = "Primary Type", 
+m1 <- pokemon_new |> ggplot() +
+  geom_mosaic(aes(x = product(happiness, primary), fill = happiness)) + 
+  labs(title = "Pokemon my Primary Type", x = "Primary Type", 
        y = "Happiness") +
   theme(
-    axis.text.x.bottom = element_text(angle = 60, vjust = .5, hjust = 0.5),
-    panel.grid.major.x = element_blank()    
-    )
+    panel.grid.major.y = element_blank(),
+    axis.text.y = element_blank(),
+    axis.ticks.y = element_blank()
+  )
 
-b4
+m1
 ```
 
 
