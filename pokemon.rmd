@@ -163,12 +163,13 @@ We also looked at how the Pokemon primary type effects it's happiness. Looking a
 ```{r}
 m1 <- pokemon_new |> ggplot() +
   geom_mosaic(aes(x = product(happiness, primary), fill = happiness)) + 
-  labs(title = "Pokemon my Primary Type", x = "Primary Type", 
+  labs(title = "Pokemon Happiness by Primary Type", x = "Primary Type", 
        y = "Happiness") +
   theme(
     panel.grid.major.y = element_blank(),
     axis.text.y = element_blank(),
-    axis.ticks.y = element_blank()
+    axis.ticks.y = element_blank(),
+    axis.text.x.bottom = element_text(angle = 60, vjust = 1, hjust = 1)
   )
 
 m1
