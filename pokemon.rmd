@@ -60,16 +60,90 @@ pokemon_new <-  pokemon %>%
 
 ## Introduction
 
-Pokémon, a Japanese card and video game, revolves around a fantasy world where people fight each other with creatures they find, capture, and then domesticate. Each creature, or Pokémon, can be characterized by certain attributes including type (fire, grass, poison etc.), identifiers (legendary vs non-legendary etc.), and skill points (health, attack, defense etc.). Our dataset is a CSV that takes all the attributes of every Pokémon and collects into one usable file. Though the dataset includes 49 variables, we primarily looked at speed, capture rate, and happiness. We choose these variables for a variety of reasons. Speed was chosen, because during the exploratory portion of the project we found that speed and weight had no significant correlation. So, we decided to investigate if the developers of the game correlated speed to any other variables. The lack of relationship between weight and speed made us distrust the development of the game. It seemed as though the developers did not put much thought into the values they gave each Pokémon. Given that we were already looking at speed, I [Miguel] wanted to see if the capture rate had any predictors. I [Nate] decided to do the same but with the base happiness of the Pokémon. Each portion of the analysis will be discussed in more detail throughout the paper to give context to variables and analysis ideas.
+<<<<<<< HEAD
+Pokémon, a Japanese card and video game, revolves around a fantasy world where people fight each other with creatures they find and domesticate. Each creature, or Pokémon, can be characterized by certain attributes from health points (hp), to their typing which includes fire-Pokémon, water-Pokémon, and grass-Pokémon among others. Our dataset is a CSV that takes all the defined characteristics of the Pokémon and collects into one useable file. Though the dataset includes 49 variables, the ones we are using include: ___________. 
+=======
+Pokémon, a Japanese card and video game, revolves around a fantasy world where people fight each other with creatures they find, capture, and then domesticate. Each creature, or Pokémon, can be characterized by certain attributes including type (fire, grass, poison etc.), identifiers (legendary vs non-legendary etc.), and skill points (health, attack, defense etc.). Our dataset is a CSV that takes all the attributes of every Pokémon and collects into one usable file. Though the dataset includes 49 variables, we primarily looked at speed, capture rate, and happiness. We choose these variables for a variety of reasons. Speed was chosen, because during the exploratory portion of the project we found that speed and weight had no significant correlation. So, I [Connor] decided to investigate if the developers of the game correlated speed to any other variables. The lack of relationship between weight and speed made us distrust the development of the game. It seemed as though the developers did not put much thought into the values they gave each Pokémon. Given that we were already looking at speed, I [Miguel] wanted to see if the capture rate had any predictors. I [Nate] decided to do the same but with the base happiness of the Pokémon. Each portion of the analysis will be discussed in more detail throughout the paper to give context to variables and analysis ideas.
 
 ![The pokedex entry for Pikachu. Includes info such as type, height, and weight](".\\Pokedex_Picture")
 
+>>>>>>> e14794bf5c0251c6de984ddef72b80e3f9e383e3
 
 ## Questions and Findings
 
 ### Speed
 
-We want to begin with looking into what factors effect the speed of the Pokemon. 
+I [Connor] want to begin with looking into what factors effect the speed of the Pokemon.
+This included testing whether real life factors such as weight and height affected the speed of the Pokemon. At first we believed they would, but as seen by the graphs below we were wrong. 
+
+```{r}
+#Weight vs Speed (organized by Generation)
+spdvswgt <- ggplot(pokemon, aes(x =weight, y =speed, color= gen_introduced)) +
+  geom_point()+
+  labs(title="Weight vs Speed", x= "Weight", y="Speed")+
+  xlim(c(0, max(pokemon$weight))) + 
+  ylim(c(0, max(pokemon$speed)))+
+  viridis::scale_color_viridis()
+ 
+
+#Speed vs Height (organized by Generation)
+spdvshgt <- ggplot(pokemon, aes(x =speed, y =height, color= gen_introduced)) +
+  geom_point()+
+  labs(title="Speed vs Height", x= "Speed", y="Height")+
+  xlim(c(0, max(pokemon$speed))) + 
+  ylim(c(0, max(pokemon$height)))+
+  viridis::scale_color_viridis()+
+  theme(plot.title = element_text(hjust = 0.5))
+
+spdvswgt
+spdvshgt
+```
+Looking at the graph for weight and speed, we noticed that there are outliers (on the right side of the graph) that do not make sense for speed. To see whether this was a mistake or not, we looked at the generation of each Pokemon  and found that the majority of the outliers came from the most recent generation rather than the earlier generations when Pokemon's system of attributes were still in the works. In addition to weight, height did not have an affect on the speed of a Pokemon, thus defying all of our expectations of this data set.
+
+
+Afterwards, we wanted to see if the speed of a Pokemon affected its overall capture rate and whether it is harder to catch a Pokemon if it has a higher speed or not. 
+```{r}
+#Speed vs Capture Rate
+ggplot(pokemon, aes(x =speed, y =capture_rate,  color= gen_introduced)) +
+  geom_point()+
+  labs(title="Speed vs Capture Rate", x= "Speed", y="Capture Rate")+
+  xlim(c(0, max(pokemon$speed))) + 
+  ylim(c(0, max(pokemon$capture_rate)))+
+  geom_smooth(se=FALSE)+
+  viridis::scale_color_viridis()+
+  theme(plot.title = element_text(hjust = 0.5))
+
+```
+The plot shows a general negative trend as the speed increases, the capture rate decreases.
+
+
+Finally with speed, since there was no realistic interpretation of speed for a given Pokemon, we decided to see if there was a relationship between a Pokemon's speed of attack and defense.  
+
+```{r}
+#Speed vs Attack 
+spdvsatk <-ggplot(pokemon, aes(x =speed, y =attack,  color= gen_introduced)) +
+  geom_point()+
+  labs(title="Speed vs Attack", x= "Speed", y="Attack")+
+  xlim(c(0, max(pokemon$speed))) + 
+  ylim(c(0, max(pokemon$attack)))+
+  geom_smooth()+
+  viridis::scale_color_viridis()+
+  theme(plot.title = element_text(hjust = 0.5))
+
+#Speed vs Defense
+spdvsdef <-ggplot(pokemon, aes(x =speed, y =defense,  color= gen_introduced)) +
+  geom_point()+
+  labs(title="Speed vs Defense", x= "Speed", y="Defense")+
+  xlim(c(0, max(pokemon$speed))) + 
+  ylim(c(0, max(pokemon$defense)))+
+  geom_smooth()+
+  viridis::scale_color_viridis()+
+  theme(plot.title = element_text(hjust = 0.5))
+
+spdvsatk+spdvsdef
+```
+The results found that attack tends to have a slight positive correlation with speed while defense does not. 
+
 
 
 ### Capture Rate
