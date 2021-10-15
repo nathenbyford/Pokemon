@@ -1,5 +1,5 @@
 ---
-title: "Pokemon Analysis"
+title: "Pokémon Analysis"
 author: "Connor Bryson, Nathen Byford, Miguel Iglesias"
 date: "10/12/2021"
 output: pdf_document
@@ -61,7 +61,7 @@ pokemon_new <-  pokemon %>%
 
 ## Introduction
 
-Pokémon, a Japanese card and video game, revolves around a fantasy world where people fight each other with creatures they find, capture, and then domesticate. Each creature, or Pokémon, can be characterized by certain attributes including type (fire, grass, poison etc.), identifiers (legendary vs non-legendary etc.), and skill points (health, attack, defense etc.). Within the world of Pokémon, this information is stored in what is known as the Pokedex. Our dataset is a CSV that takes all the attributes of every Pokémon and collects into one usable, real-world version of the Pokedex. Though the dataset includes 49 variables, we primarily looked at speed, capture rate, and happiness. We choose these variables for a variety of reasons. Speed was chosen, because during the exploratory portion of the project we found that speed and weight had no significant correlation. So, I [Connor] decided to investigate if the developers of the game correlated speed to any other variables. The lack of relationship between weight and speed made us distrust the development of the game. It seemed as though the developers did not put much thought into the values they gave each Pokémon. Given that we were already looking at speed, I [Miguel] wanted to see if the capture rate had any predictors. I [Nate] decided to do the same but with the base happiness of the Pokémon. Each portion of the analysis will be discussed in more detail throughout the paper to give context to variables and analysis ideas.
+Pokémon, a Japanese card and video game, revolves around a fantasy world where people fight each other with creatures they find, capture, and then domesticate. Each creature, or Pokémon, can be characterized by certain attributes including type (fire, grass, poison etc.), identifiers (legendary vs non-legendary etc.), and skill points (health, attack, defense etc.). Within the world of Pokémon, this information is stored in what is known as the Pokedex. Our dataset is a CSV that takes all the attributes of every pokemon and collects into one usable, real-world version of the Pokedex. Though the dataset includes 49 variables, we primarily looked at speed, capture rate, and happiness. We choose these variables for a variety of reasons. Speed was chosen, because during the exploratory portion of the project we found that speed and weight had no significant correlation. So, I [Connor] decided to investigate if the developers of the game correlated speed to any other variables. The lack of relationship between weight and speed made us distrust the development of the game. It seemed as though the developers did not put much thought into the values they gave each Pokémon. Given that we were already looking at speed, I [Miguel] wanted to see if the capture rate had any predictors. I [Nate] decided to do the same but with the base happiness of the Pokémon. Each portion of the analysis will be discussed in more detail throughout the paper to give context to variables and analysis ideas.
 
 ![The pokedex entry for Pikachu. Includes info such as type, height, and weight](".\\Pokedex_Picture")
 
@@ -71,8 +71,8 @@ Pokémon, a Japanese card and video game, revolves around a fantasy world where 
 
 ### Speed
 
-I [Connor] want to begin with looking into what factors effect the speed of the Pokemon.
-This included testing whether real life factors such as weight and height affected the speed of the Pokemon. At first we believed they would, but as seen by the graphs below we were wrong. 
+I [Connor] want to begin with looking into what factors effect the speed of the Pokémon.
+This included testing whether real life factors such as weight and height affected the speed of the Pokémon. At first we believed they would, but as seen by the graphs below we were wrong. 
 
 ```{r}
 #Weight vs Speed (organized by Generation)
@@ -96,10 +96,10 @@ spdvshgt <- ggplot(pokemon, aes(x =speed, y =height, color= gen_introduced)) +
 spdvswgt
 spdvshgt
 ```
-Looking at the graph for weight and speed, we noticed that there are outliers (on the right side of the graph) that do not make sense for speed. To see whether this was a mistake or not, we looked at the generation of each Pokemon  and found that the majority of the outliers came from the most recent generation rather than the earlier generations when Pokemon's system of attributes were still in the works. In addition to weight, height did not have an affect on the speed of a Pokemon, thus defying all of our expectations of this data set.
+Looking at the graph for weight and speed, we noticed that there are outliers (on the right side of the graph) that do not make sense for speed. To see whether this was a mistake or not, we looked at the generation of each Pokémon  and found that the majority of the outliers came from the most recent generation rather than the earlier generations when Pokémon's system of attributes were still in the works. In addition to weight, height did not have an affect on the speed of a Pokémon, thus defying all of our expectations of this data set.
 
 
-Afterwards, we wanted to see if the speed of a Pokemon affected its overall capture rate and whether it is harder to catch a Pokemon if it has a higher speed or not. 
+Afterwards, we wanted to see if the speed of a Pokémon affected its overall capture rate and whether it is harder to catch a Pokémon if it has a higher speed or not. 
 ```{r}
 #Speed vs Capture Rate
 ggplot(pokemon, aes(x =speed, y =capture_rate,  color= gen_introduced)) +
@@ -115,7 +115,7 @@ ggplot(pokemon, aes(x =speed, y =capture_rate,  color= gen_introduced)) +
 The plot shows a general negative trend as the speed increases, the capture rate decreases.
 
 
-Finally with speed, since there was no realistic interpretation of speed for a given Pokemon, we decided to see if there was a relationship between a Pokemon's speed of attack and defense.  
+Finally with speed, since there was no realistic interpretation of speed for a given Pokémon, we decided to see if there was a relationship between a Pokémon's speed of attack and defense.  
 
 ```{r}
 #Speed vs Attack 
@@ -219,7 +219,7 @@ p4 <- ggplot(pokemon_new, aes(genderless, capture_rate)) +
 
 p5 <- ggplot(pokemon_new, aes(baby_pokemon, capture_rate)) + 
   geom_boxplot() +
-  labs(x = "Baby Pokemon", y = NULL)
+  labs(x = "Baby Pokémon", y = NULL)
 
 p2 | p3 | p4 |p5
   
@@ -227,7 +227,7 @@ p2 | p3 | p4 |p5
 
 As expected, legendary and mythical Pokémon are more difficult to catch, and babies are easier to catch. What is surprsing, however, is that genderless Pokémon are also harder to catch. This could be due to a confounding variable, however, it is more likely that the game developers did not put that much thought into this. In fact, a preliminary look for confounding variables suggested that the genderless variable is not confounded by the legendary or mythical variable, both of which might have explained the increased difficulty of capture for genderless Pokémon.
 
-Lastly, I looked at how the percentage that each Pokémon is female influences capture rate. Within the game, Pokémon can be bred to make new Pokémon. Due to the presence of Pokémon breeding, Pokémon gender must also exist and each Pokémon has a set probability of being female when found in the wild. Some Pokémon have a female rate of 12.5%, whereas others are as high as 100%. This does not mean a Pokémon can be 12.5% female and 87.5% male, merely that within the whole population 12.5% of the Pokémon are female. Genderless Pokémon have a female rate of 0. For more information on the female rate, read: https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_by_gender_ratio.
+Lastly, I looked at how the percentage that each Pokémon is female influences capture rate. Within the game, Pokémon can be bred to make new Pokémon. Due to the presence of Pokémon breeding, Pokémon gender must also exist and each Pokémon has a set probability of being female when found in the wild. Some Pokémon have a female rate of 12.5%, whereas others are as high as 100%. This does not mean a Pokémon can be 12.5% female and 87.5% male, merely that within the whole population, 12.5% of the Pokémon are female. Genderless Pokémon have a female rate of 0. For more information on the female rate, read: https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_by_gender_ratio.
   
 ``` {r}
  
@@ -243,14 +243,14 @@ To avoid any confusion, it must be understood that within each Pokémon, the mal
  
 ### Happiness
 
-Lastly we wanted to see what factors effected the happiness of the Pokemon. This variable was just something we thought would be fun to look into. Our main questions were what other variables effect the Pokemon's happiness. We began with looking at if the Pokemon is a legendary and if it's a mythical Pokemon.
+Lastly we wanted to see what factors effected the happiness of the Pokémon. This variable was just something we thought would be fun to look into. Our main questions were what other variables effect the Pokémon's happiness. We began with looking at if the Pokémon is a legendary and if it's a mythical Pokémon.
 
-To get a grasp of what effects different variables had on the happiness of the Pokemon we took a look at how different characteristics of the Pokemon had an effect. Bellow are three violin plots looking at mythical, legendary, and baby Pokemon and comparing them to Pokemon without that attribute based on happiness. It is  fairly obvious that mythical and legendary Pokemon tend to be less happy, I thinkk that could be that they are tougher pokemon so when they are captured they are not happy about it. These Pokemon like to have free reign and not be controlled by trainers. While the Baby Pokemon look to be as happy or more happy than most other pokemon.  
+To get a grasp of what effects different variables had on the happiness of the Pokémon we took a look at how different characteristics of the Pokémon had an effect. Bellow are three violin plots looking at mythical, legendary, and baby Pokémon and comparing them to Pokémon without that attribute based on happiness. It is  fairly obvious that mythical and legendary Pokémon tend to be less happy, I thinkk that could be that they are tougher Pokémon so when they are captured they are not happy about it. These Pokémon like to have free reign and not be controlled by trainers. While the Baby Pokémon look to be as happy or more happy than most other Pokémon.  
 
 ```{r, fig.height=2}
 v1 <- pokemon_new |> ggplot(aes(mythical, base_happiness)) +
   geom_violin() +
-  labs(title = "Mythical Pokemon", x = "Mythical", y = "Happiness")
+  labs(title = "Mythical Pokémon", x = "Mythical", y = "Happiness")
 
 v2 <- pokemon_new |> ggplot(aes(legendary, base_happiness)) +
   geom_violin() +
@@ -258,17 +258,17 @@ v2 <- pokemon_new |> ggplot(aes(legendary, base_happiness)) +
 
 v3 <- pokemon_new |> ggplot(aes(baby_pokemon, base_happiness)) +
   geom_violin() +
-  labs(title = "Baby Pokemon", x = "Baby Pokemon", y = NULL)
+  labs(title = "Baby Pokémon", x = "Baby Pokémon", y = NULL)
 
 (v1 + v2 + v3)
 ```
 
-We also looked at how the Pokemon primary type effects it's happiness. Looking at the mosaic plot below we can see that there are different distributions of happiness bases upon primary type. Some observations to be made is that the most unhappy pokemon types are dragon, dark, and steel. Also the majority of Pokemon appear to be neutral.
+We also looked at how the pokemon primary type effects it's happiness. Looking at the mosaic plot below we can see that there are different distributions of happiness bases upon primary type. Some observations to be made is that the most unhappy pokemon types are dragon, dark, and steel. Also the majority of pokemon appear to be neutral.
 
 ```{r}
 m1 <- pokemon_new |> ggplot() +
   geom_mosaic(aes(x = product(happiness, primary), fill = happiness)) + 
-  labs(title = "Pokemon Happiness by Primary Type", x = "Primary Type", 
+  labs(title = "Pokémon Happiness by Primary Type", x = "Primary Type", 
        y = "Happiness") +
   theme(
     panel.grid.major.y = element_blank(),
@@ -281,13 +281,13 @@ m1
 ```
 
 
-We were also curious if the female rate effected happiness of the Pokemon. Converting the happiness variable to a likert scale we can easily see the amount of data points in each bin of female rate in the following plot. As seen in the plots before there is a smaller amount of Pokemon with a high female rate. Notice how it appears that depending of the female rate there are different levels of happiness that are observed. What stood out to us what that Pokemon with a female rate of 0.25 or 0.875 are only observed with neutral happiness and there are no very unhappy Pokemon with a rate of 1. There is no apparent correlation between happiness and female rate.
+We were also curious if the female rate effected happiness of the Pokémon. Converting the happiness variable to a likert scale we can easily see the amount of data points in each bin of female rate in the following plot. As seen in the plots before there is a smaller amount of Pokémon with a high female rate. Notice how it appears that depending of the female rate there are different levels of happiness that are observed. What stood out to us what that Pokémon with a female rate of 0.25 or 0.875 are only observed with neutral happiness and there are no very unhappy Pokémon with a rate of 1. There is no apparent correlation between happiness and female rate.
 
 ```{r}
 pokemon_new |> ggplot(aes(as.factor(female_rate), happiness)) +
   geom_bin2d(alpha = .9) +
   scale_fill_viridis_c() +
-  labs(title = "Happiness of Pokemon by Female Rate", x = "Female Rate", y = "Happiness") +
+  labs(title = "Happiness of Pokémon by Female Rate", x = "Female Rate", y = "Happiness") +
   theme(panel.grid.major.x = element_blank())
 ```
 
